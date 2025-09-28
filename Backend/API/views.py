@@ -5,12 +5,12 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList
 from Account.models import CustomUserModel
-from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer
+from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer
 from rest_framework.permissions import IsAuthenticated
 #register users
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status,generics,filters
+from rest_framework import status,generics,filters,permissions
 from allauth.account.models import EmailAddress
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import AllowAny
@@ -76,11 +76,46 @@ def add_userstock(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+def update_userstock(request):
+    if request.method == 'POST':
+        user=request.user
+        serializer = UpdateUserStockSerializer(user,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserStockCreateView(generics.CreateAPIView):
+    serializer_class=UserstockSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return UserStocks.objects.filter(user=self.request.user)
+
+#Update user stocks
+class UserStockUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class=UpdateUserStockSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return UserStocks.objects.filter(user=self.request.user)
+    
+#Delete user stock
+class UserStockRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = UserStocks.objects.all()  # Queryset of all user stock records
+    serializer_class = UserStockSerializer
+    permission_classes=[permissions.IsAuthenticated]
+    lookup_field = 'pk'  # default, can be omitted if 'pk' is used
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def userstockView(request):
     stock=UserStocks.objects.filter(user_id=request.user.id)
     serializer=UserStockSerializer(stock,many=True)
+    
     return Response(serializer.data)
     
 @api_view(['POST'])

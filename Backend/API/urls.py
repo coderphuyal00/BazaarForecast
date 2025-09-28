@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from  .views import RegisterView,StockListView,StockDetailView,StockTechnicalDataDetailView
+from  .views import RegisterView,StockListView,StockDetailView,StockTechnicalDataDetailView, UserStockUpdateView,UserStockRetrieveDestroyAPIView,UserStockCreateView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -11,7 +11,10 @@ urlpatterns=[
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/',RegisterView.as_view(),name='register-user'),
     path('user/detail/',views.getUser,name='get-user-details'),
-    path('user/stocks/add/',views.add_userstock,name='add-user-stocks'),
+    # path('user/stock/add/',views.add_userstock,name='add-user-stocks'),
+    path('user/stock/add/',UserStockCreateView.as_view(),name='add-user-stocks'),
+    path('user/stock/<int:pk>/update/',UserStockUpdateView.as_view(),name='update-user-stocks'),
+    path('user/stock/<int:pk>/delete/',UserStockRetrieveDestroyAPIView.as_view(),name='delete-user-stock'),
     path('user/portfolio/',views.userstockportfolioView,name='add-user-portfolio-value'),
     path('user/portfolio/add/',views.store_portfolio_value,name='add-user-stocks'),
     path('user/stock/watchlist/',views.userwatchlistView,name='view-user-watchlist'),

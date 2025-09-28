@@ -41,12 +41,33 @@ class UserStockSerializer(ModelSerializer):
     class StockNameSerializer(ModelSerializer):
         class Meta:
             model=Stock
-            fields=['ticker','name']
+            fields=['ticker','name','id']
     stock=StockNameSerializer(read_only=True)
     user=UserSerializer(read_only=True)
     class Meta:
         model=UserStocks
+        fields=['id','buy_price', 'purchase_date', 'quantity', 'stock', 'user']
+    
+    # def update(self,instance,validated_data):
+    #     instance.buy_price=validated_data.get('buy_price',instance.buy_price)
+    #     instance.purchase_date=validated_data.get('purchase_date',instance.purchase_date)
+    #     instance.quantity=validated_data.get('quantity',instance.quantity)
+#Update user stocks
+class UpdateUserStockSerializer(ModelSerializer):   
+    # Get Limited Stock Details
+    user=UserSerializer(read_only=True)
+    stock=StockSerializer(read_only=True)
+    class Meta:
+        model=UserStocks
         fields=['buy_price', 'purchase_date', 'quantity', 'stock', 'user']
+        # read_only_fields = ['user']
+    def update(self,instance,validated_data):
+        instance.buy_price=validated_data.get('buy_price',instance.buy_price)
+        instance.purchase_date=validated_data.get('purchase_date',instance.purchase_date)
+        instance.quantity=validated_data.get('quantity',instance.quantity)
+        instance.save()
+        return instance   
+    
 
 # Add stock on user profile [POST]
 class UserstockSerializer(ModelSerializer):
@@ -55,6 +76,12 @@ class UserstockSerializer(ModelSerializer):
     class Meta:
         model=UserStocks
         exclude=['user']
+        read_only_fields=['user']
+
+    def create(self, validated_data):
+        user = self.request.user  # Getting logged-in user
+        return UserStocks.objects.create(user=user, **validated_data)
+
 # Index data details
 class IndexdataSerializer(serializers.Serializer):
     index=serializers.CharField()
