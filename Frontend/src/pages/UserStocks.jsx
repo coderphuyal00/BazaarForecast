@@ -3,11 +3,12 @@ import IndexCard from "../partials/dashboard/IndexCard";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 import { useNavigate } from "react-router-dom";
-import { AngleUpIcon, AngleDownIcon } from "../icons";
+import { AngleUpIcon, AngleDownIcon, PencilIcon, TrashBinIcon } from "../icons";
 import { Button } from "@material-tailwind/react";
 import StockDataContext from "../components/context/StockDataContext";
 import TotalStockValue from "../partials/TotalStockValue";
 import ModalAddUserStock from "../components/ModalAddUserStock";
+import App from "../components/ModalTest";
 import bgImg from "../images/928.jpg";
 import {
   StockClosePrice,
@@ -20,13 +21,14 @@ function UserStocks() {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const navigate = useNavigate();
   const [userStock, setUserStock] = useState();
-  const [priceDiff, setPriceDiff] = useState();
-  const [pricePointDiff, setPricePointDiff] = useState();
-  const [isGain, setGain] = useState();
+  const [editIcon, seteditIcon] = useState("");
+  const [modalMode, setModalMode] = useState("");
+  const [selectedStock, setSelectedStock] = useState(null);
   const { UserStocks } = useContext(StockDataContext);
   useEffect(() => {
     UserStocks().then((data) => {
       setUserStock(data);
+      // console.log(data)
     });
   }, []);
 
@@ -34,6 +36,23 @@ function UserStocks() {
     navigate(`/stock/${ticker}`);
     window.location.reload();
   };
+
+  const handleEditClick = (stock) => {
+  setSelectedStock(stock);
+  setModalMode("edit");
+  setSearchModalOpen(true);
+};
+  const handleDeleteClick = (stock) => {
+  setSelectedStock(stock);
+  setModalMode("remove");
+  setSearchModalOpen(true);
+};
+
+const handleAddClick = () => {
+  setSelectedStock(null);
+  setModalMode("add");
+  setSearchModalOpen(true);
+};
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -75,16 +94,20 @@ function UserStocks() {
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setSearchModalOpen(true);
+                        // openModal("add");
+                        handleAddClick()
                       }}
                     >
                       Add Stock
                     </Button>
+
                     <ModalAddUserStock
                       id="add-search-modal"
                       searchId="add-stock"
+                      clickedOn={modalMode}
                       modalOpen={searchModalOpen}
                       setModalOpen={setSearchModalOpen}
+                      stockData={selectedStock}
                     />
                   </div>
                 </div>
@@ -181,13 +204,69 @@ function UserStocks() {
                               />
                             </div>
                           </td>
-                          <td className="p-2">
+                          <td
+                            className="p-2 relative"
+                            onMouseEnter={() => seteditIcon(item.stock.ticker)}
+                            onMouseLeave={() => seteditIcon(null)}
+                          >
                             <div className="text-center text-gray-500 dark:text-gray-100">
                               <StockNepseCharges
                                 currentTicker={item.stock.ticker}
                                 sharesCount={item.quantity}
                                 buy_price={item.buy_price}
                               />
+                            </div>
+                            <div className="flex items-center justify-center hover:bg-white/30 hover:backdrop-blur-sm dark:hover:bg-neutral-900/10 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full w-full">
+                              <div className="edit-icon">
+                                {editIcon === item.stock.ticker && (
+                                  <button
+                                    title="Edit Stock"
+                                    className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full ml-3 `}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      // setSearchModalOpen(true);
+                                      // setModalMode("edit");
+                                      // //   setstockQuantity(item.quantity);
+                                      // //   setstockTicker(item.stock.ticker);
+                                      // //   setstockBuyPrice(item.buy_price);
+                                      // //   setstockBuyDate(item.purchase_date);
+                                      // //   setstockID(item.stock.id);
+                                      // //   console.log(item.stock.id);
+                                      // //   console.log(stockID);
+                                      // //   console.log(isPurchaseDate);
+                                      // //   console.log(isBuyPrice);
+                                      // //   console.log(isQuantity);
+                                      // //   console.log(isTicker);
+                                      // handleValues(
+                                      //   item.stock.id,
+                                      //   item.quantity,
+                                      //   item.purchase_date,
+                                      //   item.buy_price,
+                                      //   item.stock.ticker
+                                      // );
+                                      handleEditClick(item)
+                                    }}
+                                  >
+                                    <PencilIcon className="text-gray-900 dark:text-gray-100 text-xl" />
+                                   
+                                  </button>
+                                )}
+                              </div>
+
+                              {editIcon === item.stock.ticker && (
+                                <div title="Remove Stock">
+                                  <button
+                                    title="Edit Stock"
+                                    className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full ml-3 `}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDeleteClick(item)
+                                    }}
+                                  >
+                                    <TrashBinIcon className="text-gray-900 dark:text-gray-100 text-xl" />
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           </td>
                         </tr>
