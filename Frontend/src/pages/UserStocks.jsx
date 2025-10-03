@@ -8,7 +8,6 @@ import { Button } from "@material-tailwind/react";
 import StockDataContext from "../components/context/StockDataContext";
 import TotalStockValue from "../partials/TotalStockValue";
 import ModalAddUserStock from "../components/ModalAddUserStock";
-import App from "../components/ModalTest";
 import bgImg from "../images/928.jpg";
 import {
   StockClosePrice,
@@ -24,13 +23,26 @@ function UserStocks() {
   const [editIcon, seteditIcon] = useState("");
   const [modalMode, setModalMode] = useState("");
   const [selectedStock, setSelectedStock] = useState(null);
+  const [stock_ids,setstock_ids]= useState([])
   const { UserStocks } = useContext(StockDataContext);
   useEffect(() => {
     UserStocks().then((data) => {
       setUserStock(data);
-      // console.log(data)
+      data.map((item)=>{
+        addStock(item.stock.id)
+      })
     });
-  }, []);
+  }, [UserStocks]);
+
+
+const addStock = (newStockid) => {
+    setstock_ids(prev => {
+      // Optionally check for duplicates here
+      const exists = prev.some(stock_id => stock_id === newStockid);
+      if (exists) return prev;
+      return [...prev, newStockid];
+    });
+  };
 
   const handleClick = (ticker) => {
     navigate(`/stock/${ticker}`);
@@ -84,8 +96,9 @@ const handleAddClick = () => {
                   <h2 className="font-semibold text-gray-800 dark:text-gray-100">
                     Stock List
                   </h2>
-                  <div title="Add Stock">
+                  <div >
                     <Button
+                    title="Add Stock"
                       type="submit"
                       variant="filled"
                       className={`w-32 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-600/50 dark:text-gray-200 dark:hover:bg-gray-600/80 ${
@@ -108,6 +121,7 @@ const handleAddClick = () => {
                       modalOpen={searchModalOpen}
                       setModalOpen={setSearchModalOpen}
                       stockData={selectedStock}
+                      storedStock={stock_ids}
                     />
                   </div>
                 </div>

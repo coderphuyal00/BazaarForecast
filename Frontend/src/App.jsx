@@ -14,15 +14,17 @@ import "./charts/ChartjsConfig";
 
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/AuthPages/SignIn";
+import SignUp from "./pages/AuthPages/SignUp";
 import SignInForm2 from "./components/auth/SignInForm2";
 import { AuthProvider } from "./components/context/AuthContext";
 import { StockDataProvider } from "./components/context/StockDataContext";
-import PrivateRoute from './utils/PrivateRoute'
+import PrivateRoute from "./utils/PrivateRoute";
 import UserDetails from "./pages/UserDetails";
-import SignUpForm from './components/auth/SignUpForm'
-import UserProfile1 from "./components/UserProfile"
+import SignUpForm from "./components/auth/SignUpForm";
+import UserProfile1 from "./components/UserProfile";
 import UserInfoCard from "./components/UserProfile/UserInfoDetails";
-import UserProfile from "./pages/UserProfile";
+// import UserProfile from "./pages/UserProfile";
+// import UserDetails from "./pages/UserDetails";
 import StockDetails from "./pages/StockDetails";
 import UserStocks from "./pages/UserStocks";
 function App() {
@@ -36,24 +38,22 @@ function App() {
 
   return (
     <>
-    
       <AuthProvider>
         <StockDataProvider>
-        <Router>
-          <Routes>
+          <Router>
+            <Routes>
               <Route element={<PrivateRoute />}>
-
                 <Route exact path="/" element={<Dashboard />} />
-                
-                <Route path="/user-details" element={<UserDetails />} />
-                <Route path="profile/" element={<UserProfile />} />
+
+                {/* <Route path="/user-details" element={<UserDetails />} /> */}
+                <Route path="profile/" element={<UserDetails />} />
                 <Route path="stock/:ticker" element={<StockDetails />} />
                 <Route path="my-stocks/" element={<UserStocks />} />
               </Route>
               <Route path="signin/" element={<SignIn />} />
-              <Route path="signup/" element={<SignUpForm />} />
-          </Routes> 
-        </Router>
+              <Route path="signup/" element={<SignUp />} />
+            </Routes>
+          </Router>
         </StockDataProvider>
       </AuthProvider>
     </>
@@ -61,4 +61,3 @@ function App() {
 }
 
 export default App;
-

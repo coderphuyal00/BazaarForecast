@@ -1,7 +1,8 @@
-import { useState,useContext } from "react";
-import { AngleUpIcon,AngleDownIcon } from "../icons";
+import { useState, useContext } from "react";
+import { AngleUpIcon, AngleDownIcon,MinusIcon } from "../icons";
 import AuthContext from "../components/context/AuthContext";
-export function StockClosePrice({ currentTicker,displayLocation }) {
+import { setsEqual } from "chart.js/helpers";
+export function StockClosePrice({ currentTicker, displayLocation }) {
   const [closePrice, setclosePrice] = useState();
   const fetchStockPrices = (ticker) => {
     //   const close_prices = [];
@@ -46,9 +47,10 @@ export function StockClosePrice({ currentTicker,displayLocation }) {
 //   return()
 // }
 // }
-export function StockPriceDiff({ currentTicker , displayLocation}) {
+export function StockPriceDiff({ currentTicker, displayLocation }) {
   const [priceDiff, setPriceDiff] = useState();
   const [isGain, setGain] = useState();
+  const [isEqual,setEqual] = useState();
   const fetchStockPricesDiff = (ticker) => {
     //   const close_prices = [];
     try {
@@ -66,6 +68,8 @@ export function StockPriceDiff({ currentTicker , displayLocation}) {
               ((lastElement - secondLastElement) / secondLastElement) * 100;
             if (lastElement > secondLastElement) {
               setGain(true);
+            } else if (lastElement == secondLastElement) {
+              setEqual(true);
             } else {
               setGain(false);
             }
@@ -84,57 +88,70 @@ export function StockPriceDiff({ currentTicker , displayLocation}) {
   fetchStockPricesDiff(currentTicker);
   //   setPriceDiff(fetchStockPricesDiff(currentTicker));
   // return <p>{priceDiff!=null?priceDiff+"%":"Loading.."}</p>;
-  if(displayLocation==='competitors-table'){
+  if (displayLocation === "competitors-table") {
     return (
-    <div>
-      {isGain ? (
-        <div className="flex items-center justify-center text-green-700">
-          <div className="text-sm ">
-            {priceDiff}{" %"}
+      <div>
+        {isGain ? (
+          <div className="flex items-center justify-center text-green-700">
+            <div className="text-sm ">
+              {priceDiff}
+              {" %"}
+            </div>
+            <div className="font-bold">
+              <AngleUpIcon className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-bold">
-            <AngleUpIcon className="h-4 w-4" />
+        ) : (
+          <div className="flex items-center justify-center text-red-700">
+            <div className="text-sm ">
+              {priceDiff}
+              {" %"}
+            </div>
+            <div className="font-bold ">
+              <AngleDownIcon className="h-4 w-4" />
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center text-red-700">
-          <div className="text-sm ">
-            {priceDiff}{" %"}
-          </div>
-          <div className="font-bold ">
-            <AngleDownIcon className="h-4 w-4" />
-          </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
   }
-  if(displayLocation==='user-stock-table'){
+  if (displayLocation === "user-stock-table") {
     return (
-    <div>
-      {isGain ? (
-        <div className="flex items-center justify-center text-green-700">
-          <div className="text-sm ">
-            +{priceDiff}{" %"}
+      <div>
+        {isGain ? (
+          <div className="flex items-center justify-center text-green-700">
+            <div className="text-sm ">
+              +{priceDiff}
+              {" %"}
+            </div>
+            <div className="font-bold">
+              <AngleUpIcon className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-bold">
-            <AngleUpIcon className="h-4 w-4" />
+        ) : isEqual ? (
+          <div className="flex items-center justify-center text-black-700">
+            <div className="text-sm ">
+              {priceDiff}
+              {" %"}
+            </div>
+            <div className="font-black rotate-90 ml-3">
+              |
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-center text-red-700">
-          <div className="text-sm ">
-            {priceDiff}{" %"}
+        ) : (
+          <div className="flex items-center justify-center text-red-700">
+            <div className="text-sm ">
+              {priceDiff}
+              {" %"}
+            </div>
+            <div className="font-bold ">
+              <AngleDownIcon className="h-4 w-4" />
+            </div>
           </div>
-          <div className="font-bold ">
-            <AngleDownIcon className="h-4 w-4" />
-          </div>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
   }
-  
 }
 export function StockValue({ currentTicker, stockQuantity }) {
   // const [priceDiff, setPriceDiff] = useState();
@@ -150,10 +167,10 @@ export function StockValue({ currentTicker, stockQuantity }) {
           let lastElement = close_prices[lastIndex - 1];
           // console.log(secondLastElement);
           function truncateDecimals(num, digits) {
-              const multiplier = Math.pow(10, digits);
-              return ~~(num * multiplier) / multiplier;
-            }
-            
+            const multiplier = Math.pow(10, digits);
+            return ~~(num * multiplier) / multiplier;
+          }
+
           const calculateStockValue = () => {
             const quantity = stockQuantity;
             const total_value = lastElement * quantity;

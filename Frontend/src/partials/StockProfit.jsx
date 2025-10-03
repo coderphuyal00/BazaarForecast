@@ -1,15 +1,20 @@
 import { useState } from "react";
 
-export default function StockNepseCharges({ currentTicker,buy_price, sharesCount, transactionType="sell" }) {
+export default function StockNepseCharges({
+  currentTicker,
+  buy_price,
+  sharesCount,
+  transactionType = "sell",
+}) {
   // transactionType: 'buy' or 'sell'
   // transactionAmount: total value of the transaction (price * quantity)
   // sharesCount: number of shares (for DP charge calculation)
-    const transactionAmount=buy_price*sharesCount
+  const transactionAmount = buy_price * sharesCount;
   // Brokerage commission rates based on transaction amount (percent)
   // Using typical updated percentage for equity trading
   const [closePrice, setclosePrice] = useState();
   const brokerageRates = [
-    { max: 50000, rate: 0.0036, minFee: 10 },     // 0.36%
+    { max: 50000, rate: 0.0036, minFee: 10 }, // 0.36%
     { max: 500000, rate: 0.0033 },
     { max: 2000000, rate: 0.0031 },
     { max: 10000000, rate: 0.0027 },
@@ -55,10 +60,10 @@ export default function StockNepseCharges({ currentTicker,buy_price, sharesCount
           let lastElement = close_prices[lastIndex - 1];
 
           function truncateDecimals(num, digits) {
-              const multiplier = Math.pow(10, digits);
-              return ~~(num * multiplier) / multiplier;
-            }
-          setclosePrice(truncateDecimals(lastElement,2));
+            const multiplier = Math.pow(10, digits);
+            return ~~(num * multiplier) / multiplier;
+          }
+          setclosePrice(truncateDecimals(lastElement, 2));
           //   return lastElement;
         });
     } catch (error) {
@@ -66,8 +71,12 @@ export default function StockNepseCharges({ currentTicker,buy_price, sharesCount
     }
   };
   fetchStockPrices(currentTicker);
-  
-  const stock_value_current=sharesCount*closePrice
-  const totalValue=stock_value_current-totalCharges
-  return <p>Rs.{totalValue != null ? totalValue : "Loading.."}</p>;
+
+  const stock_value_current = sharesCount * closePrice;
+  const totalValue = stock_value_current - totalCharges;
+  function truncateDecimals(num, digits) {
+    const multiplier = Math.pow(10, digits);
+    return ~~(num * multiplier) / multiplier;
+  }
+  return <p>Rs.{totalValue != null ? truncateDecimals(totalValue, 2) : "Loading.."}</p>;
 }

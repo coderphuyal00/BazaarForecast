@@ -1,325 +1,1618 @@
 [
-{"id": 1, "item": "ACLBSL"},
-{"id": 2, "item": "ADBL"},
-{"id": 3, "item": "ADBLD83"},
-{"id": 4, "item": "AHL"},
-{"id": 5, "item": "AHPC"},
-{"id": 6, "item": "AKJCL"},
-{"id": 7, "item": "AKPL"},
-{"id": 8, "item": "ALBSL"},
-{"id": 9, "item": "ALICL"},
-{"id": 10, "item": "ANLB"},
-{"id": 11, "item": "API"},
-{"id": 12, "item": "AVYAN"},
-{"id": 13, "item": "BARUN"},
-{"id": 14, "item": "BBC"},
-{"id": 15, "item": "BEDC"},
-{"id": 16, "item": "BFC"},
-{"id": 17, "item": "BGWT"},
-{"id": 18, "item": "BHDC"},
-{"id": 19, "item": "BHL"},
-{"id": 20, "item": "BHPL"},
-{"id": 21, "item": "BNHC"},
-{"id": 22, "item": "BNL"},
-{"id": 23, "item": "BNT"},
-{"id": 24, "item": "BPCL"},
-{"id": 25, "item": "C30MF"},
-{"id": 26, "item": "CBBL"},
-{"id": 27, "item": "CBLD88"},
-{"id": 28, "item": "CCBD88"},
-{"id": 29, "item": "CFCL"},
-{"id": 30, "item": "CGH"},
-{"id": 31, "item": "CHCL"},
-{"id": 32, "item": "CHDC"},
-{"id": 33, "item": "CHL"},
-{"id": 34, "item": "CIT"},
-{"id": 35, "item": "CITY"},
-{"id": 36, "item": "CIZBD90"},
-{"id": 37, "item": "CKHL"},
-{"id": 38, "item": "CLI"},
-{"id": 39, "item": "CMF2"},
-{"id": 40, "item": "CORBL"},
-{"id": 41, "item": "CREST"},
-{"id": 42, "item": "CYCL"},
-{"id": 43, "item": "CZBIL"},
-{"id": 44, "item": "DDBL"},
-{"id": 45, "item": "DHPL"},
-{"id": 46, "item": "DLBS"},
-{"id": 47, "item": "DOLTI"},
-{"id": 48, "item": "DORDI"},
-{"id": 49, "item": "EBL"},
-{"id": 50, "item": "EBLD85"},
-{"id": 51, "item": "EBLD86"},
-{"id": 52, "item": "EBLD91"},
-{"id": 53, "item": "EDBL"},
-{"id": 54, "item": "EHPL"},
-{"id": 55, "item": "ENL"},
-{"id": 56, "item": "FMDBL"},
-{"id": 57, "item": "FOWAD"},
-{"id": 58, "item": "GBBD85"},
-{"id": 59, "item": "GBBL"},
-{"id": 60, "item": "GBILD84/85"},
-{"id": 61, "item": "GBIME"},
-{"id": 62, "item": "GBLBS"},
-{"id": 63, "item": "GCIL"},
-{"id": 64, "item": "GFCL"},
-{"id": 65, "item": "GHL"},
-{"id": 66, "item": "GIBF1"},
-{"id": 67, "item": "GILB"},
-{"id": 68, "item": "GLBSL"},
-{"id": 69, "item": "GLH"},
-{"id": 70, "item": "GMFBS"},
-{"id": 71, "item": "GMFIL"},
-{"id": 72, "item": "GMLI"},
-{"id": 73, "item": "GRDBL"},
-{"id": 74, "item": "GSY"},
-{"id": 75, "item": "GUFL"},
-{"id": 76, "item": "GVL"},
-{"id": 77, "item": "GWFD83"},
-{"id": 78, "item": "H8020"},
-{"id": 79, "item": "HATHY"},
-{"id": 80, "item": "HBL"},
-{"id": 81, "item": "HDHPC"},
-{"id": 82, "item": "HDL"},
-{"id": 83, "item": "HEI"},
-{"id": 84, "item": "HEIP"},
-{"id": 85, "item": "HHL"},
-{"id": 86, "item": "HIDCL"},
-{"id": 87, "item": "HIDCLP"},
-{"id": 88, "item": "HLBSL"},
-{"id": 89, "item": "HLI"},
-{"id": 90, "item": "HPPL"},
-{"id": 91, "item": "HRL"},
-{"id": 92, "item": "HURJA"},
-{"id": 93, "item": "ICFC"},
-{"id": 94, "item": "ICFCD83"},
-{"id": 95, "item": "ICFCD88"},
-{"id": 96, "item": "IGI"},
-{"id": 97, "item": "IHL"},
-{"id": 98, "item": "ILBS"},
-{"id": 99, "item": "ILI"},
-{"id": 100, "item": "JBBL"},
-{"id": 101, "item": "JBLB"},
-{"id": 102, "item": "JFL"},
-{"id": 103, "item": "JOSHI"},
-{"id": 104, "item": "JSLBB"},
-{"id": 105, "item": "KBL"},
-{"id": 106, "item": "KBLD86"},
-{"id": 107, "item": "KBLD90"},
-{"id": 108, "item": "KBSH"},
-{"id": 109, "item": "KDBY"},
-{"id": 110, "item": "KDL"},
-{"id": 111, "item": "KEF"},
-{"id": 112, "item": "KKHC"},
-{"id": 113, "item": "KMCDB"},
-{"id": 114, "item": "KPCL"},
-{"id": 115, "item": "KSBBL"},
-{"id": 116, "item": "KSBBLP"},
-{"id": 117, "item": "KSY"},
-{"id": 118, "item": "LBBL"},
-{"id": 119, "item": "LBBLD89"},
-{"id": 120, "item": "LEC"},
-{"id": 121, "item": "LICN"},
-{"id": 122, "item": "LLBS"},
-{"id": 123, "item": "LSL"},
-{"id": 124, "item": "LSLPO"},
-{"id": 125, "item": "LUK"},
-{"id": 126, "item": "LVF2"},
-{"id": 127, "item": "MAKAR"},
-{"id": 128, "item": "MANDU"},
-{"id": 129, "item": "MATRI"},
-{"id": 130, "item": "MBJC"},
-{"id": 131, "item": "MBL"},
-{"id": 132, "item": "MBLD2085"},
-{"id": 133, "item": "MBLEF"},
-{"id": 134, "item": "MCHL"},
-{"id": 135, "item": "MDB"},
-{"id": 136, "item": "MEHL"},
-{"id": 137, "item": "MEL"},
-{"id": 138, "item": "MEN"},
-{"id": 139, "item": "MERO"},
-{"id": 140, "item": "MFIL"},
-{"id": 141, "item": "MHCL"},
-{"id": 142, "item": "MHL"},
-{"id": 143, "item": "MHNL"},
-{"id": 144, "item": "MKCL"},
-{"id": 145, "item": "MKHC"},
-{"id": 146, "item": "MKHL"},
-{"id": 147, "item": "MKJC"},
-{"id": 148, "item": "MLBBL"},
-{"id": 149, "item": "MLBL"},
-{"id": 150, "item": "MLBLD89"},
-{"id": 151, "item": "MLBS"},
-{"id": 152, "item": "MLBSL"},
-{"id": 153, "item": "MMF1"},
-{"id": 154, "item": "MMKJL"},
-{"id": 155, "item": "MNBBL"},
-{"id": 156, "item": "MND84/85"},
-{"id": 157, "item": "MNMF1"},
-{"id": 158, "item": "MPFL"},
-{"id": 159, "item": "MSHL"},
-{"id": 160, "item": "MSLB"},
-{"id": 161, "item": "NABBC"},
-{"id": 162, "item": "NABIL"},
-{"id": 163, "item": "NABILD87"},
-{"id": 164, "item": "NADEP"},
-{"id": 165, "item": "NBF2"},
-{"id": 166, "item": "NBF3"},
-{"id": 167, "item": "NBL"},
-{"id": 168, "item": "NBLD87"},
-{"id": 169, "item": "NESDO"},
-{"id": 170, "item": "NFS"},
-{"id": 171, "item": "NGPL"},
-{"id": 172, "item": "NHDL"},
-{"id": 173, "item": "NHPC"},
-{"id": 174, "item": "NIBD84"},
-{"id": 175, "item": "NIBLGF"},
-{"id": 176, "item": "NIBLSTF"},
-{"id": 177, "item": "NIBSF2"},
-{"id": 178, "item": "NICA"},
-{"id": 179, "item": "NICAD8283"},
-{"id": 180, "item": "NICBF"},
-{"id": 181, "item": "NICFC"},
-{"id": 182, "item": "NICGF2"},
-{"id": 183, "item": "NICL"},
-{"id": 184, "item": "NICLBSL"},
-{"id": 185, "item": "NICSF"},
-{"id": 186, "item": "NIFRA"},
-{"id": 187, "item": "NIL"},
-{"id": 188, "item": "NIMB"},
-{"id": 189, "item": "NIMBPO"},
-{"id": 190, "item": "NLG"},
-{"id": 191, "item": "NLIC"},
-{"id": 192, "item": "NLICL"},
-{"id": 193, "item": "NMB"},
-{"id": 194, "item": "NMB50"},
-{"id": 195, "item": "NMBD2085"},
-{"id": 196, "item": "NMBD87/88"},
-{"id": 197, "item": "NMBHF2"},
-{"id": 198, "item": "NMBMF"},
-{"id": 199, "item": "NMFBS"},
-{"id": 200, "item": "NMIC"},
-{"id": 201, "item": "NMLBBL"},
-{"id": 202, "item": "NRIC"},
-{"id": 203, "item": "NRM"},
-{"id": 204, "item": "NRN"},
-{"id": 205, "item": "NSIF2"},
-{"id": 206, "item": "NTC"},
-{"id": 207, "item": "NUBL"},
-{"id": 208, "item": "NWCL"},
-{"id": 209, "item": "NYADI"},
-{"id": 210, "item": "OHL"},
-{"id": 211, "item": "OMPL"},
-{"id": 212, "item": "PBD88"},
-{"id": 213, "item": "PBLD84"},
-{"id": 214, "item": "PBLD87"},
-{"id": 215, "item": "PCBL"},
-{"id": 216, "item": "PFL"},
-{"id": 217, "item": "PHCL"},
-{"id": 218, "item": "PMHPL"},
-{"id": 219, "item": "PMLI"},
-{"id": 220, "item": "PPCL"},
-{"id": 221, "item": "PPL"},
-{"id": 222, "item": "PRIN"},
-{"id": 223, "item": "PROFL"},
-{"id": 224, "item": "PRSF"},
-{"id": 225, "item": "PRVU"},
-{"id": 226, "item": "PRVUPO"},
-{"id": 227, "item": "PSF"},
-{"id": 228, "item": "PURE"},
-{"id": 229, "item": "RADHI"},
-{"id": 230, "item": "RAWA"},
-{"id": 231, "item": "RBBD83"},
-{"id": 232, "item": "RBCL"},
-{"id": 233, "item": "RBCLPO"},
-{"id": 234, "item": "RFPL"},
-{"id": 235, "item": "RHGCL"},
-{"id": 236, "item": "RHPL"},
-{"id": 237, "item": "RIDI"},
-{"id": 238, "item": "RLFL"},
-{"id": 239, "item": "RMF1"},
-{"id": 240, "item": "RMF2"},
-{"id": 241, "item": "RNLI"},
-{"id": 242, "item": "RSDC"},
-{"id": 243, "item": "RURU"},
-{"id": 244, "item": "SADBL"},
-{"id": 245, "item": "SAGF"},
-{"id": 246, "item": "SAHAS"},
-{"id": 247, "item": "SALICO"},
-{"id": 248, "item": "SAMAJ"},
-{"id": 249, "item": "SANIMA"},
-{"id": 250, "item": "SAPDBL"},
-{"id": 251, "item": "SARBTM"},
-{"id": 252, "item": "SBCF"},
-{"id": 253, "item": "SBI"},
-{"id": 254, "item": "SBIBD86"},
-{"id": 255, "item": "SBID83"},
-{"id": 256, "item": "SBL"},
-{"id": 257, "item": "SBLPO"},
-{"id": 258, "item": "SCB"},
-{"id": 259, "item": "SDBD87"},
-{"id": 260, "item": "SEF"},
-{"id": 261, "item": "SFCL"},
-{"id": 262, "item": "SFEF"},
-{"id": 263, "item": "SGHC"},
-{"id": 264, "item": "SGIC"},
-{"id": 265, "item": "SHEL"},
-{"id": 266, "item": "SHINE"},
-{"id": 267, "item": "SHIVM"},
-{"id": 268, "item": "SHL"},
-{"id": 269, "item": "SHLB"},
-{"id": 270, "item": "SHPC"},
-{"id": 271, "item": "SICL"},
-{"id": 272, "item": "SIFC"},
-{"id": 273, "item": "SIGS2"},
-{"id": 274, "item": "SIGS3"},
-{"id": 275, "item": "SIKLES"},
-{"id": 276, "item": "SINDU"},
-{"id": 277, "item": "SJCL"},
-{"id": 278, "item": "SJLIC"},
-{"id": 279, "item": "SKBBL"},
-{"id": 280, "item": "SLBBL"},
-{"id": 281, "item": "SLBSL"},
-{"id": 282, "item": "SLCF"},
-{"id": 283, "item": "SMATA"},
-{"id": 284, "item": "SMB"},
-{"id": 285, "item": "SMFBS"},
-{"id": 286, "item": "SMH"},
-{"id": 287, "item": "SMHL"},
-{"id": 288, "item": "SMJC"},
-{"id": 289, "item": "SMPDA"},
-{"id": 290, "item": "SNLI"},
-{"id": 291, "item": "SONA"},
-{"id": 292, "item": "SPC"},
-{"id": 293, "item": "SPDL"},
-{"id": 294, "item": "SPHL"},
-{"id": 295, "item": "SPIL"},
-{"id": 296, "item": "SPL"},
-{"id": 297, "item": "SRLI"},
-{"id": 298, "item": "SSHL"},
-{"id": 299, "item": "STC"},
-{"id": 300, "item": "SWBBL"},
-{"id": 301, "item": "SWMF"},
-{"id": 302, "item": "TAMOR"},
-{"id": 303, "item": "TPC"},
-{"id": 304, "item": "TRH"},
-{"id": 305, "item": "TSHL"},
-{"id": 306, "item": "TVCL"},
-{"id": 307, "item": "UAIL"},
-{"id": 308, "item": "UHEWA"},
-{"id": 309, "item": "ULBSL"},
-{"id": 310, "item": "ULHC"},
-{"id": 311, "item": "UMHL"},
-{"id": 312, "item": "UMRH"},
-{"id": 313, "item": "UNHPL"},
-{"id": 314, "item": "UNL"},
-{"id": 315, "item": "UNLB"},
-{"id": 316, "item": "UPCL"},
-{"id": 317, "item": "UPPER"},
-{"id": 318, "item": "USHEC"},
-{"id": 319, "item": "USHL"},
-{"id": 320, "item": "USLB"},
-{"id": 321, "item": "VLBS"},
-{"id": 322, "item": "VLUCL"},
-{"id": 323, "item": "WNLB"}
-]
+    {
+      "id": 1,
+      "symbol": "ACLBSL",
+      "name": "Aarambha Chautari Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 2,
+      "symbol": "ADBL",
+      "name": "Agriculture Development Bank Limited"
+    },
+    {
+      "id": 3,
+      "symbol": "ADBLD83",
+      "name": "10.35% Agricultural Bank Debenture 2083"
+    },
+    {
+      "id": 4,
+      "symbol": "AHL",
+      "name": "Asian Hydropower Limited"
+    },
+    {
+      "id": 5,
+      "symbol": "AHPC",
+      "name": "Arun Valley Hydropower Development Co. Ltd."
+    },
+    {
+      "id": 6,
+      "symbol": "AKJCL",
+      "name": "Ankhu Khola Jalvidhyut Company Ltd"
+    },
+    {
+      "id": 7,
+      "symbol": "AKPL",
+      "name": "Arun Kabeli Power Ltd."
+    },
+    {
+      "id": 8,
+      "symbol": "ALBSL",
+      "name": "Asha Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 9,
+      "symbol": "ALICL",
+      "name": "Asian Life Insurance Co. Limited"
+    },
+    {
+      "id": 10,
+      "symbol": "ANLB",
+      "name": "Aatmanirbhar Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 11,
+      "symbol": "API",
+      "name": "Api Power Company Ltd."
+    },
+    {
+      "id": 12,
+      "symbol": "AVYAN",
+      "name": "Aviyan Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 13,
+      "symbol": "BARUN",
+      "name": "Barun Hydropower Co. Ltd."
+    },
+    {
+      "id": 14,
+      "symbol": "BBC",
+      "name": "Bishal Bazar Company Limited"
+    },
+    {
+      "id": 15,
+      "symbol": "BEDC",
+      "name": "Bhugol Energy Development Company Limited"
+    },
+    {
+      "id": 16,
+      "symbol": "BFC",
+      "name": "Best Finance Company Ltd."
+    },
+    {
+      "id": 17,
+      "symbol": "BGWT",
+      "name": "Bhagawati Hydropower Development Company Ltd."
+    },
+    {
+      "id": 18,
+      "symbol": "BHDC",
+      "name": "Bindyabasini Hydropower Development Company Limited"
+    },
+    {
+      "id": 19,
+      "symbol": "BHL",
+      "name": "Balephi Hydropower Limited"
+    },
+    {
+      "id": 20,
+      "symbol": "BHPL",
+      "name": "Barahi Hydropower Public Limited"
+    },
+    {
+      "id": 21,
+      "symbol": "BNHC",
+      "name": "Buddhabhumi Nepal Hydropower Company Limited"
+    },
+    {
+      "id": 22,
+      "symbol": "BNL",
+      "name": "Bottlers Nepal (Balaju) Limited"
+    },
+    {
+      "id": 23,
+      "symbol": "BNT",
+      "name": "Bottlers Nepal (Terai) Limited"
+    },
+    {
+      "id": 24,
+      "symbol": "BPCL",
+      "name": "Butwal Power Company Limited"
+    },
+    {
+      "id": 25,
+      "symbol": "C30MF",
+      "name": "Citizens Super 30 Mutual Fund"
+    },
+    {
+      "id": 26,
+      "symbol": "CBBL",
+      "name": "Chhimek Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 27,
+      "symbol": "CBLD88",
+      "name": "Civil Bank Debenture 2088"
+    },
+    {
+      "id": 28,
+      "symbol": "CCBD88",
+      "name": "Century Debenture 2088"
+    },
+    {
+      "id": 29,
+      "symbol": "CFCL",
+      "name": "Central Finance Co. Ltd."
+    },
+    {
+      "id": 30,
+      "symbol": "CGH",
+      "name": "Chandragiri Hills Limited"
+    },
+    {
+      "id": 31,
+      "symbol": "CHCL",
+      "name": "Chilime Hydropower Company Limited"
+    },
+    {
+      "id": 32,
+      "symbol": "CHDC",
+      "name": "CEDB Holdings Limited"
+    },
+    {
+      "id": 33,
+      "symbol": "CHL",
+      "name": "Chhyangdi Hydropower Ltd."
+    },
+    {
+      "id": 34,
+      "symbol": "CIT",
+      "name": "Citizen Investment Trust"
+    },
+    {
+      "id": 35,
+      "symbol": "CITY",
+      "name": "City Hotel Limited"
+    },
+    {
+      "id": 36,
+      "symbol": "CIZBD90",
+      "name": "10% Citizens Bank Debentujhre 2090"
+    },
+    {
+      "id": 37,
+      "symbol": "CKHL",
+      "name": "Chirkhwa Hydropower Limited"
+    },
+    {
+      "id": 38,
+      "symbol": "CLI",
+      "name": "Citizen Life Insurance Company Limited"
+    },
+    {
+      "id": 39,
+      "symbol": "CMF2",
+      "name": "CITIZENS MUTUAL FUND 2"
+    },
+    {
+      "id": 40,
+      "symbol": "CORBL",
+      "name": "Corporate Development Bank Limited"
+    },
+    {
+      "id": 41,
+      "symbol": "CREST",
+      "name": "Crest Micro Life Insurance Ltd."
+    },
+    {
+      "id": 42,
+      "symbol": "CYCL",
+      "name": "CYC Nepal Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 43,
+      "symbol": "CZBIL",
+      "name": "Citizen Bank International Limited"
+    },
+    {
+      "id": 44,
+      "symbol": "DDBL",
+      "name": "Deprosc Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 45,
+      "symbol": "DHPL",
+      "name": "Dibyashwori Hydropower Ltd."
+    },
+    {
+      "id": 46,
+      "symbol": "DLBS",
+      "name": "Dhaulagiri Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 47,
+      "symbol": "DOLTI",
+      "name": "Dolti Power Company Limited"
+    },
+    {
+      "id": 48,
+      "symbol": "DORDI",
+      "name": "Dordi Khola Jal Bidyut Company Limited"
+    },
+    {
+      "id": 49,
+      "symbol": "EBL",
+      "name": "Everest Bank Limited"
+    },
+    {
+      "id": 50,
+      "symbol": "EBLD85",
+      "name": "10.50% Everest Bank Limited Debenture 2085"
+    },
+    {
+      "id": 51,
+      "symbol": "EBLD86",
+      "name": "8.5% of Everest Bank Limited Debenture 2086"
+    },
+    {
+      "id": 52,
+      "symbol": "EBLD91",
+      "name": "Everest Bank Limited Rinpatra 2091"
+    },
+    {
+      "id": 53,
+      "symbol": "EDBL",
+      "name": "Excel Development Bank Ltd."
+    },
+    {
+      "id": 54,
+      "symbol": "EHPL",
+      "name": "Eastern Hydropower Limited"
+    },
+    {
+      "id": 55,
+      "symbol": "ENL",
+      "name": "Emerging Nepal Limited"
+    },
+    {
+      "id": 56,
+      "symbol": "FMDBL",
+      "name": "First Micro Finance Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 57,
+      "symbol": "FOWAD",
+      "name": "Forward Microfinance Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 58,
+      "symbol": "GBBD85",
+      "name": "Garima Debenture, 2085"
+    },
+    {
+      "id": 59,
+      "symbol": "GBBL",
+      "name": "Garima Bikas Bank Limited"
+    },
+    {
+      "id": 60,
+      "symbol": "GBILD84/85",
+      "name": "Global IME Bank Debenture 2084/85"
+    },
+    {
+      "id": 61,
+      "symbol": "GBIME",
+      "name": "Global IME Bank Limited"
+    },
+    {
+      "id": 62,
+      "symbol": "GBLBS",
+      "name": "Grameen Bikas Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 63,
+      "symbol": "GCIL",
+      "name": "Ghorahi Cement Industry Limited"
+    },
+    {
+      "id": 64,
+      "symbol": "GFCL",
+      "name": "Goodwill Finance Co. Ltd."
+    },
+    {
+      "id": 65,
+      "symbol": "GHL",
+      "name": "Ghalemdi Hydro Limited"
+    },
+    {
+      "id": 66,
+      "symbol": "GIBF1",
+      "name": "Global IME Balanced Fund-1"
+    },
+    {
+      "id": 67,
+      "symbol": "GILB",
+      "name": "Global IME Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 68,
+      "symbol": "GLBSL",
+      "name": "Gurans Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 69,
+      "symbol": "GLH",
+      "name": "Greenlife Hydropower Limited"
+    },
+    {
+      "id": 70,
+      "symbol": "GMFBS",
+      "name": "Ganapati Microfinance Bittiya Sanstha Ltd"
+    },
+    {
+      "id": 71,
+      "symbol": "GMFIL",
+      "name": "Guheshowori Merchant Bank & Finance Co. Ltd."
+    },
+    {
+      "id": 72,
+      "symbol": "GMLI",
+      "name": "Guardian Micro-Life Insurance Limited"
+    },
+    {
+      "id": 73,
+      "symbol": "GRDBL",
+      "name": "Green Development Bank Ltd."
+    },
+    {
+      "id": 74,
+      "symbol": "GSY",
+      "name": "Garima Samriddhi Yojana"
+    },
+    {
+      "id": 75,
+      "symbol": "GUFL",
+      "name": "Gurkhas Finance Ltd."
+    },
+    {
+      "id": 76,
+      "symbol": "GVL",
+      "name": "Green Ventures Limited"
+    },
+    {
+      "id": 77,
+      "symbol": "GWFD83",
+      "name": "12% Goodwill finance Debenture 2083"
+    },
+    {
+      "id": 78,
+      "symbol": "H8020",
+      "name": "Himalayan 80-20"
+    },
+    {
+      "id": 79,
+      "symbol": "HATHY",
+      "name": "Hathway Investment Nepal Limited"
+    },
+    {
+      "id": 80,
+      "symbol": "HBL",
+      "name": "Himalayan Bank Limited"
+    },
+    {
+      "id": 81,
+      "symbol": "HDHPC",
+      "name": "Himal Dolakha Hydropower Company Limited"
+    },
+    {
+      "id": 82,
+      "symbol": "HDL",
+      "name": "Himalayan Distillery Limited"
+    },
+    {
+      "id": 83,
+      "symbol": "HEI",
+      "name": "Himalayan Everest Insurance Limited"
+    },
+    {
+      "id": 84,
+      "symbol": "HEIP",
+      "name": "Himalayan Everest Insurance Limited Promoter"
+    },
+    {
+      "id": 85,
+      "symbol": "HHL",
+      "name": "Himalayan Hydropower Limited"
+    },
+    {
+      "id": 86,
+      "symbol": "HIDCL",
+      "name": "Hydorelectricity Investment and Development Company Ltd"
+    },
+    {
+      "id": 87,
+      "symbol": "HIDCLP",
+      "name": "Hydroelectricity Investment and Development Company Limited Promoter Share"
+    },
+    {
+      "id": 88,
+      "symbol": "HLBSL",
+      "name": "Himalayan Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 89,
+      "symbol": "HLI",
+      "name": "Himalayan Life Insurance Limited"
+    },
+    {
+      "id": 90,
+      "symbol": "HPPL",
+      "name": "Himalayan Power Partner Ltd."
+    },
+    {
+      "id": 91,
+      "symbol": "HRL",
+      "name": "Himalayan Reinsurance Limited"
+    },
+    {
+      "id": 92,
+      "symbol": "HURJA",
+      "name": "Himalaya Urja Bikas Company Limited"
+    },
+    {
+      "id": 93,
+      "symbol": "ICFC",
+      "name": "ICFC Finance Limited"
+    },
+    {
+      "id": 94,
+      "symbol": "ICFCD83",
+      "name": "12% ICFC Finance Limited Debenture 2083"
+    },
+    {
+      "id": 95,
+      "symbol": "ICFCD88",
+      "name": "9% ICFC Finance Limited Debenture-2088"
+    },
+    {
+      "id": 96,
+      "symbol": "IGI",
+      "name": "IGI Prudential Insurance Company Limited"
+    },
+    {
+      "id": 97,
+      "symbol": "IHL",
+      "name": "Ingwa Hydropower Limited"
+    },
+    {
+      "id": 98,
+      "symbol": "ILBS",
+      "name": "Infinity Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 99,
+      "symbol": "ILI",
+      "name": "IME Life Insurance Company Limited"
+    },
+    {
+      "id": 100,
+      "symbol": "JBBL",
+      "name": "Jyoti Bikas Bank Limited"
+    },
+    {
+      "id": 101,
+      "symbol": "JBLB",
+      "name": "Jeevan Bikas Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 102,
+      "symbol": "JFL",
+      "name": "Janaki Finance Ltd."
+    },
+    {
+      "id": 103,
+      "symbol": "JOSHI",
+      "name": "Joshi Hydropower Development Company Ltd"
+    },
+    {
+      "id": 104,
+      "symbol": "JSLBB",
+      "name": "Janautthan Samudayic Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 105,
+      "symbol": "KBL",
+      "name": "Kumari Bank Limited"
+    },
+    {
+      "id": 106,
+      "symbol": "KBLD86",
+      "name": "10.25% Kumari Bank Debenture 2086"
+    },
+    {
+      "id": 107,
+      "symbol": "KBLD90",
+      "name": "10% KBL Debenture 2090"
+    },
+    {
+      "id": 108,
+      "symbol": "KBSH",
+      "name": "Kutheli Bukhari Small Hydropower Limited"
+    },
+    {
+      "id": 109,
+      "symbol": "KDBY",
+      "name": "Kumari Dhanabriddhi Yojana"
+    },
+    {
+      "id": 110,
+      "symbol": "KDL",
+      "name": "Kalinchowk Darshan Limited"
+    },
+    {
+      "id": 111,
+      "symbol": "KEF",
+      "name": "Kumari Equity Fund"
+    },
+    {
+      "id": 112,
+      "symbol": "KKHC",
+      "name": "Khanikhola Hydropower Co. Ltd."
+    },
+    {
+      "id": 113,
+      "symbol": "KMCDB",
+      "name": "Kalika Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 114,
+      "symbol": "KPCL",
+      "name": "Kalika power Company Ltd"
+    },
+    {
+      "id": 115,
+      "symbol": "KSBBL",
+      "name": "Kamana Sewa Bikas Bank Limited"
+    },
+    {
+      "id": 116,
+      "symbol": "KSBBLP",
+      "name": "Kamana Sewa Bikas Bank Limited Promoter Share"
+    },
+    {
+      "id": 117,
+      "symbol": "KSY",
+      "name": "Kumari Sabal Yojana"
+    },
+    {
+      "id": 118,
+      "symbol": "LBBL",
+      "name": "Lumbini Bikas Bank Ltd."
+    },
+    {
+      "id": 119,
+      "symbol": "LBBLD89",
+      "name": "11% L.B.B.L. Debenture 2089"
+    },
+    {
+      "id": 120,
+      "symbol": "LEC",
+      "name": "Liberty Energy Company Limited"
+    },
+    {
+      "id": 121,
+      "symbol": "LICN",
+      "name": "Life Insurance Co. Nepal"
+    },
+    {
+      "id": 122,
+      "symbol": "LLBS",
+      "name": "Laxmi Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 123,
+      "symbol": "LSL",
+      "name": "Laxmi Sunrise Bank Limited"
+    },
+    {
+      "id": 124,
+      "symbol": "LSLPO",
+      "name": "Laxmi Sunrise Bank Limited Promoter Share"
+    },
+    {
+      "id": 125,
+      "symbol": "LUK",
+      "name": "Laxmi unnati Kosh"
+    },
+    {
+      "id": 126,
+      "symbol": "LVF2",
+      "name": "Laxmi Value Fund 2"
+    },
+    {
+      "id": 127,
+      "symbol": "MAKAR",
+      "name": "Makar Jitumaya Suri Hydropower Limited"
+    },
+    {
+      "id": 128,
+      "symbol": "MANDU",
+      "name": "Mandu Hydropower Ltd."
+    },
+    {
+      "id": 129,
+      "symbol": "MATRI",
+      "name": "Matribhumi Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 130,
+      "symbol": "MBJC",
+      "name": "Madhya Bhotekoshi Jalavidyut Company Limited"
+    },
+    {
+      "id": 131,
+      "symbol": "MBL",
+      "name": "Machhapuchchhre Bank Limited"
+    },
+    {
+      "id": 132,
+      "symbol": "MBLD2085",
+      "name": "10.25% Machhapuchhre Bank Debenture 2085"
+    },
+    {
+      "id": 133,
+      "symbol": "MBLEF",
+      "name": "MBL Equity Fund"
+    },
+    {
+      "id": 134,
+      "symbol": "MCHL",
+      "name": "Menchhiyam Hydropower Limited"
+    },
+    {
+      "id": 135,
+      "symbol": "MDB",
+      "name": "Miteri Development Bank Limited"
+    },
+    {
+      "id": 136,
+      "symbol": "MEHL",
+      "name": "Manakamana Engineering Hydropower Limited"
+    },
+    {
+      "id": 137,
+      "symbol": "MEL",
+      "name": "Modi Energy Limited"
+    },
+    {
+      "id": 138,
+      "symbol": "MEN",
+      "name": "Mountain Energy Nepal Limited"
+    },
+    {
+      "id": 139,
+      "symbol": "MERO",
+      "name": "Meromicrofinance Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 140,
+      "symbol": "MFIL",
+      "name": "Manjushree Finance Ltd."
+    },
+    {
+      "id": 141,
+      "symbol": "MHCL",
+      "name": "Molung Hydropower Company Limited"
+    },
+    {
+      "id": 142,
+      "symbol": "MHL",
+      "name": "Mandakini Hydropower Limited"
+    },
+    {
+      "id": 143,
+      "symbol": "MHNL",
+      "name": "Mountain Hydro Nepal Limited"
+    },
+    {
+      "id": 144,
+      "symbol": "MKCL",
+      "name": "Muktinath Krishi Company Limited"
+    },
+    {
+      "id": 145,
+      "symbol": "MKHC",
+      "name": "Maya Khola Hydropower Company Limited"
+    },
+    {
+      "id": 146,
+      "symbol": "MKHL",
+      "name": "Mai Khola Hydropower Limited"
+    },
+    {
+      "id": 147,
+      "symbol": "MKJC",
+      "name": "Mailung Khola Jal Vidhyut Company Limited"
+    },
+    {
+      "id": 148,
+      "symbol": "MLBBL",
+      "name": "Mithila Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 149,
+      "symbol": "MLBL",
+      "name": "Mahalaxmi Bikas Bank Ltd."
+    },
+    {
+      "id": 150,
+      "symbol": "MLBLD89",
+      "name": "11% Mahalaxmi Debenture-2089"
+    },
+    {
+      "id": 151,
+      "symbol": "MLBS",
+      "name": "Manushi Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 152,
+      "symbol": "MLBSL",
+      "name": "Mahila Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 153,
+      "symbol": "MMF1",
+      "name": "Mega Mutual Fund-1"
+    },
+    {
+      "id": 154,
+      "symbol": "MMKJL",
+      "name": "Mathillo Mailun Khola Jalvidyut Limited"
+    },
+    {
+      "id": 155,
+      "symbol": "MNBBL",
+      "name": "Muktinath Bikas Bank Ltd."
+    },
+    {
+      "id": 156,
+      "symbol": "MND84/85",
+      "name": "8.75% Muktinath Debenture/Rinpatra 2084/85"
+    },
+    {
+      "id": 157,
+      "symbol": "MNMF1",
+      "name": "Muktinath Mutual Fund 1"
+    },
+    {
+      "id": 158,
+      "symbol": "MPFL",
+      "name": "Multipurpose Finance Company Limited"
+    },
+    {
+      "id": 159,
+      "symbol": "MSHL",
+      "name": "Mid-Solu Hydropower Limited"
+    },
+    {
+      "id": 160,
+      "symbol": "MSLB",
+      "name": "Mahuli Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 161,
+      "symbol": "NABBC",
+      "name": "Narayani Development Bank Limited"
+    },
+    {
+      "id": 162,
+      "symbol": "NABIL",
+      "name": "Nabil Bank Limited"
+    },
+    {
+      "id": 163,
+      "symbol": "NABILD87",
+      "name": "9% Nabil Debenture 2087"
+    },
+    {
+      "id": 164,
+      "symbol": "NADEP",
+      "name": "Nadep Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 165,
+      "symbol": "NBF2",
+      "name": "NABIL BALANCED FUND-2"
+    },
+    {
+      "id": 166,
+      "symbol": "NBF3",
+      "name": "Nabil Balanced Fund-3"
+    },
+    {
+      "id": 167,
+      "symbol": "NBL",
+      "name": "Nepal Bank Limited"
+    },
+    {
+      "id": 168,
+      "symbol": "NBLD87",
+      "name": "8.5% Nepal Bank Debenture 2087"
+    },
+    {
+      "id": 169,
+      "symbol": "NESDO",
+      "name": "NESDO Sambridha Laghubitta Bittiye Sanstha Limited"
+    },
+    {
+      "id": 170,
+      "symbol": "NFS",
+      "name": "Nepal Finance Ltd."
+    },
+    {
+      "id": 171,
+      "symbol": "NGPL",
+      "name": "Ngadi Group Power Ltd."
+    },
+    {
+      "id": 172,
+      "symbol": "NHDL",
+      "name": "Nepal Hydro Developers Ltd."
+    },
+    {
+      "id": 173,
+      "symbol": "NHPC",
+      "name": "National Hydro Power Company Limited"
+    },
+    {
+      "id": 174,
+      "symbol": "NIBD84",
+      "name": "8.5% Nepal Investment Bank Debenture 2084"
+    },
+    {
+      "id": 175,
+      "symbol": "NIBLGF",
+      "name": "NIBL Growth Fund"
+    },
+    {
+      "id": 176,
+      "symbol": "NIBLSTF",
+      "name": "NIBL Stable Fund"
+    },
+    {
+      "id": 177,
+      "symbol": "NIBSF2",
+      "name": "NIBL Samriddhi Fund 2"
+    },
+    {
+      "id": 178,
+      "symbol": "NICA",
+      "name": "NIC Asia Bank Ltd."
+    },
+    {
+      "id": 179,
+      "symbol": "NICAD8283",
+      "name": "11% NIC Asia Debenture 082/83"
+    },
+    {
+      "id": 180,
+      "symbol": "NICBF",
+      "name": "NIC Asia Balanced Fund"
+    },
+    {
+      "id": 181,
+      "symbol": "NICFC",
+      "name": "NIC ASIA Flexi CAP Fund"
+    },
+    {
+      "id": 182,
+      "symbol": "NICGF2",
+      "name": "NIC Asia Growth Fund-2"
+    },
+    {
+      "id": 183,
+      "symbol": "NICL",
+      "name": "Nepal Insurance Co. Ltd."
+    },
+    {
+      "id": 184,
+      "symbol": "NICLBSL",
+      "name": "NIC Asia Laghubitta Biitiya Sanstha Limited"
+    },
+    {
+      "id": 185,
+      "symbol": "NICSF",
+      "name": "NIC Asia Select - 30 (Index Fund)"
+    },
+    {
+      "id": 186,
+      "symbol": "NIFRA",
+      "name": "Nepal Infrastructure Bank Limited"
+    },
+    {
+      "id": 187,
+      "symbol": "NIL",
+      "name": "Neco Insurance Co. Ltd."
+    },
+    {
+      "id": 188,
+      "symbol": "NIMB",
+      "name": "Nepal Investment Mega Bank Limited"
+    },
+    {
+      "id": 189,
+      "symbol": "NIMBPO",
+      "name": "Nepal Investment Mega Bank Ltd. Promoter Share"
+    },
+    {
+      "id": 190,
+      "symbol": "NLG",
+      "name": "NLG Insurance Company Ltd."
+    },
+    {
+      "id": 191,
+      "symbol": "NLIC",
+      "name": "Nepal Life Insurance Co. Ltd."
+    },
+    {
+      "id": 192,
+      "symbol": "NLICL",
+      "name": "National Life Insurance Co. Ltd."
+    },
+    {
+      "id": 193,
+      "symbol": "NMB",
+      "name": "NMB Bank Limited"
+    },
+    {
+      "id": 194,
+      "symbol": "NMB50",
+      "name": "NMB 50"
+    },
+    {
+      "id": 195,
+      "symbol": "NMBD2085",
+      "name": "10% NMB DEBENTURE 2085"
+    },
+    {
+      "id": 196,
+      "symbol": "NMBD87/88",
+      "name": "8.50% NMB Rinpatra 2087/88"
+    },
+    {
+      "id": 197,
+      "symbol": "NMBHF2",
+      "name": "NMB Hybrid Fund L-II"
+    },
+    {
+      "id": 198,
+      "symbol": "NMBMF",
+      "name": "NMB Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 199,
+      "symbol": "NMFBS",
+      "name": "National Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 200,
+      "symbol": "NMIC",
+      "name": "Nepal Micro Insurance Co. Ltd."
+    },
+    {
+      "id": 201,
+      "symbol": "NMLBBL",
+      "name": "Nerude Mirmire Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 202,
+      "symbol": "NRIC",
+      "name": "Nepal Re-Insurance Company Limited"
+    },
+    {
+      "id": 203,
+      "symbol": "NRM",
+      "name": "Nepal Republic Media Limited"
+    },
+    {
+      "id": 204,
+      "symbol": "NRN",
+      "name": "NRN Infrastructure and Development Limited"
+    },
+    {
+      "id": 205,
+      "symbol": "NSIF2",
+      "name": "NMB Sulav Investment Fund - 2"
+    },
+    {
+      "id": 206,
+      "symbol": "NTC",
+      "name": "Nepal Doorsanchar Comapany Limited"
+    },
+    {
+      "id": 207,
+      "symbol": "NUBL",
+      "name": "Nirdhan Utthan Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 208,
+      "symbol": "NWCL",
+      "name": "Nepal Warehousing Company Limited"
+    },
+    {
+      "id": 209,
+      "symbol": "NYADI",
+      "name": "Nyadi Hydropower Limited"
+    },
+    {
+      "id": 210,
+      "symbol": "OHL",
+      "name": "Oriental Hotels Limited"
+    },
+    {
+      "id": 211,
+      "symbol": "OMPL",
+      "name": "Om Megashree Pharmaceuticals Limited"
+    },
+    {
+      "id": 212,
+      "symbol": "PBD88",
+      "name": "10% Prime Debenture 2088"
+    },
+    {
+      "id": 213,
+      "symbol": "PBLD84",
+      "name": "10% Prabhu Bank Debenture 2084"
+    },
+    {
+      "id": 214,
+      "symbol": "PBLD87",
+      "name": "8.5% Prabhu Bank Debenture 2087"
+    },
+    {
+      "id": 215,
+      "symbol": "PCBL",
+      "name": "Prime Commercial Bank Ltd."
+    },
+    {
+      "id": 216,
+      "symbol": "PFL",
+      "name": "Pokhara Finance Ltd."
+    },
+    {
+      "id": 217,
+      "symbol": "PHCL",
+      "name": "Peoples Hydropower Company Limited"
+    },
+    {
+      "id": 218,
+      "symbol": "PMHPL",
+      "name": "Panchakanya Mai Hydropower Ltd"
+    },
+    {
+      "id": 219,
+      "symbol": "PMLI",
+      "name": "Prabhu Mahalaxmi Life Insurance Limited"
+    },
+    {
+      "id": 220,
+      "symbol": "PPCL",
+      "name": "Panchthar Power Company Limited"
+    },
+    {
+      "id": 221,
+      "symbol": "PPL",
+      "name": "People's Power Limited"
+    },
+    {
+      "id": 222,
+      "symbol": "PRIN",
+      "name": "Prabhu Insurance Ltd."
+    },
+    {
+      "id": 223,
+      "symbol": "PROFL",
+      "name": "Progressive Finance Limited"
+    },
+    {
+      "id": 224,
+      "symbol": "PRSF",
+      "name": "Prabhu Smart Fund"
+    },
+    {
+      "id": 225,
+      "symbol": "PRVU",
+      "name": "Prabhu Bank Limited"
+    },
+    {
+      "id": 226,
+      "symbol": "PRVUPO",
+      "name": "Prabhu Bank Limited Promoter Share"
+    },
+    {
+      "id": 227,
+      "symbol": "PSF",
+      "name": "Prabhu Select Fund"
+    },
+    {
+      "id": 228,
+      "symbol": "PURE",
+      "name": "Pure Energy Ltd."
+    },
+    {
+      "id": 229,
+      "symbol": "RADHI",
+      "name": "Radhi Bidyut Company Ltd"
+    },
+    {
+      "id": 230,
+      "symbol": "RAWA",
+      "name": "Rawa Energy Development Limited"
+    },
+    {
+      "id": 231,
+      "symbol": "RBBD83",
+      "name": "8.5% RBBL Debenture 2083"
+    },
+    {
+      "id": 232,
+      "symbol": "RBCL",
+      "name": "Rastriya Beema Company Limited"
+    },
+    {
+      "id": 233,
+      "symbol": "RBCLPO",
+      "name": "Rastriya Beema Company Limited Promoter Share"
+    },
+    {
+      "id": 234,
+      "symbol": "RFPL",
+      "name": "River Falls Power Limited"
+    },
+    {
+      "id": 235,
+      "symbol": "RHGCL",
+      "name": "Rapti Hydro and General Construction Limited"
+    },
+    {
+      "id": 236,
+      "symbol": "RHPL",
+      "name": "RASUWAGADHI HYDROPOWER COMPANY LIMITED"
+    },
+    {
+      "id": 237,
+      "symbol": "RIDI",
+      "name": "Ridi Power Company Limited"
+    },
+    {
+      "id": 238,
+      "symbol": "RLFL",
+      "name": "Reliance Finance Ltd."
+    },
+    {
+      "id": 239,
+      "symbol": "RMF1",
+      "name": "RBB Mutual Fund 1"
+    },
+    {
+      "id": 240,
+      "symbol": "RMF2",
+      "name": "RBB Mutual Fund 2"
+    },
+    {
+      "id": 241,
+      "symbol": "RNLI",
+      "name": "Reliable Nepal Life Insurance Limited"
+    },
+    {
+      "id": 242,
+      "symbol": "RSDC",
+      "name": "RSDC Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 243,
+      "symbol": "RURU",
+      "name": "Ru Ru Jalbidhyut Pariyojana Limited"
+    },
+    {
+      "id": 244,
+      "symbol": "SADBL",
+      "name": "Shangrila Development Bank Ltd."
+    },
+    {
+      "id": 245,
+      "symbol": "SAGF",
+      "name": "Sanima Growth Fund"
+    },
+    {
+      "id": 246,
+      "symbol": "SAHAS",
+      "name": "Sahas Urja Limited"
+    },
+    {
+      "id": 247,
+      "symbol": "SALICO",
+      "name": "Sagarmatha Lumbini Insurance Co. Limited"
+    },
+    {
+      "id": 248,
+      "symbol": "SAMAJ",
+      "name": "Samaj Laghubittya Bittiya Sanstha Limited"
+    },
+    {
+      "id": 249,
+      "symbol": "SANIMA",
+      "name": "Sanima Bank Limited"
+    },
+    {
+      "id": 250,
+      "symbol": "SAPDBL",
+      "name": "Saptakoshi Development Bank Ltd"
+    },
+    {
+      "id": 251,
+      "symbol": "SARBTM",
+      "name": "Sarbottam Cement Limited"
+    },
+    {
+      "id": 252,
+      "symbol": "SBCF",
+      "name": "Sunrise Bluechip Fund"
+    },
+    {
+      "id": 253,
+      "symbol": "SBI",
+      "name": "Nepal SBI Bank Limited"
+    },
+    {
+      "id": 254,
+      "symbol": "SBIBD86",
+      "name": "10% Nepal SBI Bank Debenture 2086"
+    },
+    {
+      "id": 255,
+      "symbol": "SBID83",
+      "name": "10.25% Nepal SBI Bank Debenture 2083"
+    },
+    {
+      "id": 256,
+      "symbol": "SBL",
+      "name": "Siddhartha Bank Limited"
+    },
+    {
+      "id": 257,
+      "symbol": "SBLPO",
+      "name": "Siddhartha Bank Limited Promoter Share"
+    },
+    {
+      "id": 258,
+      "symbol": "SCB",
+      "name": "Standard Chartered Bank Limited"
+    },
+    {
+      "id": 259,
+      "symbol": "SDBD87",
+      "name": "9% Shangri-la Development Bank Debenture 2087"
+    },
+    {
+      "id": 260,
+      "symbol": "SEF",
+      "name": "Siddhartha Equity Fund"
+    },
+    {
+      "id": 261,
+      "symbol": "SFCL",
+      "name": "Samriddhi Finance Company Limited"
+    },
+    {
+      "id": 262,
+      "symbol": "SFEF",
+      "name": "Sunrise Focused Equity Fund"
+    },
+    {
+      "id": 263,
+      "symbol": "SGHC",
+      "name": "Swet-Ganga Hydropower & Construction Limited"
+    },
+    {
+      "id": 264,
+      "symbol": "SGIC",
+      "name": "Sanima GIC Insurance Limited"
+    },
+    {
+      "id": 265,
+      "symbol": "SHEL",
+      "name": "Singati Hydro Energy Limited"
+    },
+    {
+      "id": 266,
+      "symbol": "SHINE",
+      "name": "Shine Resunga Development Bank Ltd."
+    },
+    {
+      "id": 267,
+      "symbol": "SHIVM",
+      "name": "SHIVAM CEMENTS LTD"
+    },
+    {
+      "id": 268,
+      "symbol": "SHL",
+      "name": "Soaltee Hotel Limited"
+    },
+    {
+      "id": 269,
+      "symbol": "SHLB",
+      "name": "Shrijanshil Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 270,
+      "symbol": "SHPC",
+      "name": "Sanima Mai Hydropower Ltd."
+    },
+    {
+      "id": 271,
+      "symbol": "SICL",
+      "name": "Shikhar Insurance Co. Ltd."
+    },
+    {
+      "id": 272,
+      "symbol": "SIFC",
+      "name": "Shree Investment Finance Co. Ltd."
+    },
+    {
+      "id": 273,
+      "symbol": "SIGS2",
+      "name": "Siddhartha Investment Growth Scheme - 2"
+    },
+    {
+      "id": 274,
+      "symbol": "SIGS3",
+      "name": "Siddhartha Investment Growth Scheme 3"
+    },
+    {
+      "id": 275,
+      "symbol": "SIKLES",
+      "name": "Sikles Hydropower Limited"
+    },
+    {
+      "id": 276,
+      "symbol": "SINDU",
+      "name": "Sindhu Bikash Bank Ltd"
+    },
+    {
+      "id": 277,
+      "symbol": "SJCL",
+      "name": "SANJEN JALAVIDHYUT COMPANY LIMITED"
+    },
+    {
+      "id": 278,
+      "symbol": "SJLIC",
+      "name": "SuryaJyoti Life Insurance Company Limited"
+    },
+    {
+      "id": 279,
+      "symbol": "SKBBL",
+      "name": "Sana Kisan Bikas Laghubitta Bittiya sanstha Limited."
+    },
+    {
+      "id": 280,
+      "symbol": "SLBBL",
+      "name": "Swarojgar Laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 281,
+      "symbol": "SLBSL",
+      "name": "Samudayik Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 282,
+      "symbol": "SLCF",
+      "name": "Sanima Large Cap Fund"
+    },
+    {
+      "id": 283,
+      "symbol": "SMATA",
+      "name": "Samata Gharelu Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 284,
+      "symbol": "SMB",
+      "name": "Support Microfinance Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 285,
+      "symbol": "SMFBS",
+      "name": "Swabhimaan Laghubitta Bittiya Sanstha Ltd"
+    },
+    {
+      "id": 286,
+      "symbol": "SMH",
+      "name": "Super Mai Hydropower Limited"
+    },
+    {
+      "id": 287,
+      "symbol": "SMHL",
+      "name": "Super Madi Hydropower Limited"
+    },
+    {
+      "id": 288,
+      "symbol": "SMJC",
+      "name": "Sagarmatha Jalabidhyut Company Limited"
+    },
+    {
+      "id": 289,
+      "symbol": "SMPDA",
+      "name": "Sampada Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 290,
+      "symbol": "SNLI",
+      "name": "Sun Nepal Life Insurance Company Limited"
+    },
+    {
+      "id": 291,
+      "symbol": "SONA",
+      "name": "Sonapur Minerals and Oil Limited"
+    },
+    {
+      "id": 292,
+      "symbol": "SPC",
+      "name": "Samling Power Company Limited"
+    },
+    {
+      "id": 293,
+      "symbol": "SPDL",
+      "name": "Synergy Power Development Ltd."
+    },
+    {
+      "id": 294,
+      "symbol": "SPHL",
+      "name": "Sayapatri Hydropower Limited"
+    },
+    {
+      "id": 295,
+      "symbol": "SPIL",
+      "name": "Siddhartha Premier Insurance Limited"
+    },
+    {
+      "id": 296,
+      "symbol": "SPL",
+      "name": "Shuvam Power Company Limited"
+    },
+    {
+      "id": 297,
+      "symbol": "SRLI",
+      "name": "Sanima Reliance Life Insurance Limited"
+    },
+    {
+      "id": 298,
+      "symbol": "SSHL",
+      "name": "Shiva Shree Hydropower Limited"
+    },
+    {
+      "id": 299,
+      "symbol": "STC",
+      "name": "Salt Trading Corporation"
+    },
+    {
+      "id": 300,
+      "symbol": "SWBBL",
+      "name": "Swabalamban Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 301,
+      "symbol": "SWMF",
+      "name": "Suryodaya Womi Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 302,
+      "symbol": "TAMOR",
+      "name": "Sanima Middle Tamor Hydropower Limited"
+    },
+    {
+      "id": 303,
+      "symbol": "TPC",
+      "name": "Terhathum Power Company Limited"
+    },
+    {
+      "id": 304,
+      "symbol": "TRH",
+      "name": "Taragaon Regency Hotel Limited"
+    },
+    {
+      "id": 305,
+      "symbol": "TSHL",
+      "name": "Three Star Hydropower Limited"
+    },
+    {
+      "id": 306,
+      "symbol": "TVCL",
+      "name": "Trishuli Jal Vidhyut Company Limited"
+    },
+    {
+      "id": 307,
+      "symbol": "UAIL",
+      "name": "United Ajod Insurance Limited"
+    },
+    {
+      "id": 308,
+      "symbol": "UHEWA",
+      "name": "Upper Hewakhola Hydropower Company Limited"
+    },
+    {
+      "id": 309,
+      "symbol": "ULBSL",
+      "name": "Upakar Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 310,
+      "symbol": "ULHC",
+      "name": "Upper Lohore Khola Hydropower Company Limited"
+    },
+    {
+      "id": 311,
+      "symbol": "UMHL",
+      "name": "United Modi Hydropower Ltd."
+    },
+    {
+      "id": 312,
+      "symbol": "UMRH",
+      "name": "United IDI Mardi RB Hydropower Limited."
+    },
+    {
+      "id": 313,
+      "symbol": "UNHPL",
+      "name": "Union Hydropower Limited"
+    },
+    {
+      "id": 314,
+      "symbol": "UNL",
+      "name": "Unilever Nepal Limited"
+    },
+    {
+      "id": 315,
+      "symbol": "UNLB",
+      "name": "Unique Nepal Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 316,
+      "symbol": "UPCL",
+      "name": "UNIVERSAL POWER COMPANY LTD"
+    },
+    {
+      "id": 317,
+      "symbol": "UPPER",
+      "name": "Upper Tamakoshi Hydropower Ltd"
+    },
+    {
+      "id": 318,
+      "symbol": "USHEC",
+      "name": "Upper Solu Hydro Electric Company Limited"
+    },
+    {
+      "id": 319,
+      "symbol": "USHL",
+      "name": "Upper Syange Hydropower Limited"
+    },
+    {
+      "id": 320,
+      "symbol": "USLB",
+      "name": "Unnati Sahakarya Laghubitta Bittiya Sanstha Limited"
+    },
+    {
+      "id": 321,
+      "symbol": "VLBS",
+      "name": "Vijaya laghubitta Bittiya Sanstha Ltd."
+    },
+    {
+      "id": 322,
+      "symbol": "VLUCL",
+      "name": "Vision Lumbini Urja Company Limited"
+    },
+    {
+      "id": 323,
+      "symbol": "WNLB",
+      "name": "WEAN Nepal Laghubitta Bittiya Sanstha Limited"
+    }
+  ]
+

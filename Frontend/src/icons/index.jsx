@@ -1,4 +1,5 @@
 import { ReactComponent as PlusIcon } from "./plus.svg?react";
+import { ReactComponent as MinusIcon } from "./minus.svg?react";
 import { ReactComponent as PlusIcon2 } from "./plus-2.svg?react";
 import { ReactComponent as PlusIcon3 } from "./plus-3.svg?react";
 import { ReactComponent as CloseIcon } from "./close.svg?react";
@@ -67,6 +68,7 @@ export {
   AudioIcon,
   VideoIcon,
   BoltIcon,
+  MinusIcon,
   PlusIcon,
   PlusIcon2,
   PlusIcon3,

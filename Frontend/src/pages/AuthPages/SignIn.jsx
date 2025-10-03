@@ -6,9 +6,9 @@ function SignIn(){
 
     return(
         <>
-        <AuthPageLayout>
+        <AuthPageLayout layout="signin">
             <SignInForm/>
-        </AuthPageLayout>
+        </AuthPageLayout >
         </>
     )
 }
