@@ -8,7 +8,7 @@
 <body>
     {%if data%}
     {%for stock in data%}
-    <div><p>{{stock.ticker}}</p></div>
+    <div style="display:flex ; flex-direction:row" ><p>{{stock.ticker}}</p> <p> - {{stock.name}}</p></div>
     {%endfor%}
     {%endif%}
 </body>
