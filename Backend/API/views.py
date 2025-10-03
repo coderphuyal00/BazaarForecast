@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -5,7 +6,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList
 from Account.models import CustomUserModel
-from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer
+from .serializers import CustomUserSerializer,UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer
 from rest_framework.permissions import IsAuthenticated
 #register users
 from rest_framework.views import APIView
@@ -42,10 +43,17 @@ def getStock(request):
 @permission_classes([IsAuthenticated])
 def getUser(request):
     current_user_id=request.user.id
-    user=CustomUserModel.objects.all()
-    serializer=UserSerializer(user,many=True)
+    user=CustomUserModel.objects.get(id=current_user_id)
+    serializer=UserSerializer(user,many=False)
     return Response(serializer.data)
 
+class UserDetailsUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class=CustomUserSerializer
+    permission_classes=[permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return CustomUserModel.objects.filter(id=self.request.user.id)
+    
 @api_view(['GET'])
 def getIndexesprice(request,index):
     data = getIndexData(f'{index}')
@@ -67,33 +75,36 @@ def getStockprice(request,stock,resolution):
     else:
         return Response(serializer.errors, status=400)
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def add_userstock(request):
-    if request.method == 'POST':
-        serializer = UserstockSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-@api_view(['PUT'])
+# @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
-def update_userstock(request):
-    if request.method == 'POST':
-        user=request.user
-        serializer = UpdateUserStockSerializer(user,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# def add_userstock(request):
+#     if request.method == 'POST':
+#         serializer = UserstockSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(user=request.user)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class UserStockCreateView(generics.CreateAPIView):
+# @api_view(['PUT'])
+# # @permission_classes([IsAuthenticated])
+# def update_userstock(request):
+#     if request.method == 'POST':
+#         user=request.user
+#         serializer = UpdateUserStockSerializer(user,data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class UserStockCreateView(generics.ListCreateAPIView):
     serializer_class=UserstockSerializer
     permission_classes=[permissions.IsAuthenticated]
 
     def get_queryset(self):
         return UserStocks.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 #Update user stocks
 class UserStockUpdateView(generics.RetrieveUpdateAPIView):

@@ -16,7 +16,16 @@ class StockSerializer(ModelSerializer):
 class UserSerializer(ModelSerializer):
     class Meta:
         model=CustomUserModel
-        fields=['first_name','last_name','email','username']
+        fields=['id','first_name','last_name','email']
+        # fields='__all__'
+        # exclude=['is_active','password']
+
+class CustomUserSerializer(ModelSerializer):
+    class Meta:
+        model=CustomUserModel
+        # fields=['first_name','last_name','email','username']
+        # fields='__all__'
+        exclude=['is_active','password']
 
 # Stock Daily Price
 class stockpriceSerializer(serializers.Serializer):
@@ -47,11 +56,7 @@ class UserStockSerializer(ModelSerializer):
     class Meta:
         model=UserStocks
         fields=['id','buy_price', 'purchase_date', 'quantity', 'stock', 'user']
-    
-    # def update(self,instance,validated_data):
-    #     instance.buy_price=validated_data.get('buy_price',instance.buy_price)
-    #     instance.purchase_date=validated_data.get('purchase_date',instance.purchase_date)
-    #     instance.quantity=validated_data.get('quantity',instance.quantity)
+   
 #Update user stocks
 class UpdateUserStockSerializer(ModelSerializer):   
     # Get Limited Stock Details
@@ -75,12 +80,9 @@ class UserstockSerializer(ModelSerializer):
     
     class Meta:
         model=UserStocks
+        # fields='__all__'
         exclude=['user']
-        read_only_fields=['user']
-
-    def create(self, validated_data):
-        user = self.request.user  # Getting logged-in user
-        return UserStocks.objects.create(user=user, **validated_data)
+    
 
 # Index data details
 class IndexdataSerializer(serializers.Serializer):
@@ -94,7 +96,7 @@ User = get_user_model()
 class RegisterSerializer(serializers.ModelSerializer):
    class Meta:
     model=User
-    fields=['username','email','password']
+    fields=['first_name','last_name','email','password']
 
    def validate_email(self, email):
         if User.objects.filter(email=email).exists():
@@ -106,7 +108,6 @@ class RegisterSerializer(serializers.ModelSerializer):
    
    def create(self,validated_data):
         user=User.objects.create_user(
-            username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password']           
         )
