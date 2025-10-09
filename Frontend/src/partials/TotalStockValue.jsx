@@ -13,8 +13,8 @@ function TotalStockValue({ displayLocation }) {
   useEffect(() => {
     async function fetchUserStocks() {
       try {
-        const stocks = await UserStocks();
-        setUserStocks(stocks);
+        // const stocks = await UserStocks();
+        setUserStocks(UserStocks);
       } catch (err) {
         console.error("Failed to fetch user stocks:", err);
       }
@@ -32,21 +32,10 @@ function TotalStockValue({ displayLocation }) {
       try {
         const stockValues = await Promise.all(
           userStocks.map(async (item) => {
-            const response = await fetch(
-              `http://127.0.0.1:8000/api/stock/1D/${item.stock.ticker}/`
-            );
-            if (!response.ok) {
-              throw new Error(
-                `Failed to fetch stock data for ${item.stock.ticker}`
-              );
-            }
-            const data = await response.json();
-            const closePrices = data.map((d) => d.close_price);
-            const dates = data.map((d) => d.date);
-            const lastPrice = closePrices[closePrices.length - 1] || 0;
-            const lastDate = dates[dates.length - 1] || 0;
-            setCurrentDate(lastDate);
-            return lastPrice * item.quantity;
+            const todayClosePrice = item?.stock.prices.at(-1).close_price;
+            const dates = item?.stock.prices.at(-1).date;
+            setCurrentDate(dates);
+            return todayClosePrice * item.quantity;
           })
         );
 
@@ -186,7 +175,7 @@ function TotalStockValue({ displayLocation }) {
         </div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-[#d8dbe2] dark:text-[#a9bcd0] mr-2">
-            {totalValue}
+            {totalValue.toLocaleString("en-US")}
           </div>
           {isGain ? (
             <div className="text-sm font-medium text-green-700 mt-2 px-1.5 bg-green-500/20 rounded-full">
@@ -205,9 +194,11 @@ function TotalStockValue({ displayLocation }) {
     ); // formatted to 2 decimals
   }
   if (displayLocation === "stock-table") {
-    return(
-    <div className=" font-bold text-gray-800 dark:text-gray-100 dark:font-bold">Rs.{totalValue}</div>
-    )
+    return (
+      <div className=" font-bold text-gray-800 dark:text-gray-100 dark:font-bold">
+        Rs.{totalValue.toLocaleString("en-US")}
+      </div>
+    );
   }
 }
 

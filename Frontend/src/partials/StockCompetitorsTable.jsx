@@ -159,7 +159,7 @@ function StockCompetitorsTable({
             </div>
           </td>
           <td className="p-2">
-            <div className="text-center"><StockPriceDiff currentTicker={currentTicker.stock.ticker} displayLocation='competitors-table'/></div>
+            <div className="text-center"><StockPriceDiff TickerPrices={currentTicker.stock.ticker} displayLocation='competitors-table'/></div>
           </td>
           <td className="p-2">
             <div className="text-center">
@@ -206,11 +206,11 @@ function StockCompetitorsTable({
               </td>
               <td className="p-2">
                 <div className="text-center">
-                  <StockClosePrice currentTicker={item1.stock.ticker}/>
+                  <StockClosePrice TickerPrice={item1.stock.ticker}/>
                 </div>
               </td>
               <td className="p-1">
-                <div className="text-center dark:text-gray-300"><StockPriceDiff className="text-gray-800" currentTicker={item1.stock.ticker} displayLocation='competitors-table'/></div>
+                <div className="text-center dark:text-gray-300"><StockPriceDiff className="text-gray-800" TickerPrices={item1.stock.ticker} displayLocation='competitors-table'/></div>
               </td>
               <td className="p-2">
                 <div className="text-center ">

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function StockNepseCharges({
-  currentTicker,
+  TickerPrice,
   buy_price,
   sharesCount,
   transactionType = "sell",
@@ -49,28 +49,16 @@ export default function StockNepseCharges({
 
   // Total charges
   const totalCharges = brokerageCommission + sebonFee + dpCharge;
-  const fetchStockPrices = (ticker) => {
-    //   const close_prices = [];
-    try {
-      fetch(`http://127.0.0.1:8000/api/stock/1D/${ticker}/`)
-        .then((response) => response.json())
-        .then((data) => {
-          const close_prices = data.map((item) => item.close_price);
-          let lastIndex = close_prices.length;
-          let lastElement = close_prices[lastIndex - 1];
 
-          function truncateDecimals(num, digits) {
-            const multiplier = Math.pow(10, digits);
-            return ~~(num * multiplier) / multiplier;
-          }
-          setclosePrice(truncateDecimals(lastElement, 2));
-          //   return lastElement;
-        });
+  useEffect(() => {
+    try {
+      const prices = TickerPrice;
+      const todayClosePrice = prices[prices.length - 1].close_price;
+      setclosePrice(todayClosePrice.toFixed(2));
     } catch (error) {
       return error;
     }
-  };
-  fetchStockPrices(currentTicker);
+  }, [TickerPrice]);
 
   const stock_value_current = sharesCount * closePrice;
   const totalValue = stock_value_current - totalCharges;
@@ -78,5 +66,9 @@ export default function StockNepseCharges({
     const multiplier = Math.pow(10, digits);
     return ~~(num * multiplier) / multiplier;
   }
-  return <p>Rs.{totalValue != null ? truncateDecimals(totalValue, 2) : "Loading.."}</p>;
+  return (
+    <p>
+      Rs.{totalValue != null ? truncateDecimals(totalValue, 2) : "Loading.."}
+    </p>
+  );
 }
