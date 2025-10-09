@@ -33,7 +33,7 @@ export default function AuthLayout({ children,layout }) {
   }
   if (layout == "signup") {
     return (
-      <div className="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0">
+      <div className="relative p-6 bg-white z-1 dark:bg-gray-800 sm:p-0">
         <div className="relative flex flex-col justify-center w-full h-screen lg:flex-row dark:bg-gray-900 sm:p-0">
           
           <div className="items-center hidden w-full h-full lg:w-1/2 bg-brand-950 dark:bg-white/5 lg:grid">
@@ -45,7 +45,7 @@ export default function AuthLayout({ children,layout }) {
                   <Logo />
                 </Link>
                 <p className="text-center text-gray-400 dark:text-white/60">
-                  Free and Open-Source Tailwind CSS Admin Dashboard Template
+                  Track your stock with price prediction feature.
                 </p>
               </div>
             </div>
