@@ -20,7 +20,8 @@ export function formatIndianNumber(num) {
   } else if (num >= 100000) {
     return (num / 100000).toFixed(2).replace(/\.00$/, '') + ' lakh';
   } else {
-    return num.toString();
+    // return num.toString();
+    return num;
   }
 }
 export const formatDecimals = (value) =>{
