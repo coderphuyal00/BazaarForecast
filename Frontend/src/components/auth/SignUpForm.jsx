@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import AuthContext from "../context/AuthContext";
-import { Input, Link, Button } from "@material-tailwind/react";
+import { Link } from "react-router";
+import { useAuth } from "../context/AuthContext";
+import { Input, Button } from "@material-tailwind/react";
 import { ChevronLeftIcon } from "../../icons";
 function SignUpForm() {
-  //   const {loginUser,user}=useContext(AuthContext);
+  const { loginUser, user } = useAuth();
   //   const navigate = useNavigate();
   const SignupUser = async (e) => {
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const auth = useAuth();
     e.preventDefault();
     try {
       let response = await fetch("http://127.0.0.1:8000/api/register/", {
@@ -16,13 +20,16 @@ function SignUpForm() {
         },
         body: JSON.stringify({
           username: e.target.email.value,
+          first_name: e.target.firstName.value,
+          last_name: e.target.lastName.value,
           email: e.target.email.value,
           password: e.target.password.value,
         }),
       });
       let data = await response.json();
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("User Signup API Post Works");
+        await loginUser(email,password);
         console.log(data);
       } else {
         console.error("Error:", data);
@@ -82,17 +89,17 @@ function SignUpForm() {
   // };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 dark:bg-gray-900">
       {/* new form */}
       <div className="flex flex-col flex-1">
         <div className="w-full max-w-md pt-10 mx-auto">
-          <a
+          <Link
             to="/"
             className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
           >
             <ChevronLeftIcon className="size-5" />
             Back to dashboard
-          </a>
+          </Link>
         </div>
         <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
           <div>
@@ -160,35 +167,37 @@ function SignUpForm() {
               <form className="space-y-4" onSubmit={handleSubmit}>
                 <div className="flex w-full flex-row items-end gap-6">
                   <Input
-                    variant="outlined"
+                    // variant="outlined"
                     type="text"
                     placeholder="First Name"
                     // value={}
-                    name="first_name"
+                    id="first_name"
+                    name="firstName"
                     // onChange={onChange}
                     className="pr-20 rounded-md"
-                    containerProps={{
-                      className: "min-w-0",
-                    }}
+                    // containerProps={{
+                    //   className: "min-w-0",
+                    // }}
                   />
                   <Input
-                    variant="outlined"
+                    // variant="outlined"
                     type="text"
                     placeholder="Last Name"
                     // value={}
-                    name="last_name"
+                    id="last_name"
+                    name="lastName"
                     // onChange={onChange}
                     className="pr-20 rounded-md"
-                    containerProps={{
-                      className: "min-w-0",
-                    }}
+                    // containerProps={{
+                    //   className: "min-w-0",
+                    // }}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Email
                   </label>
-                  <input
+                  <Input
                     type="email"
                     id="email"
                     name="email"
@@ -201,24 +210,22 @@ function SignUpForm() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Password
                   </label>
-                  <input
+                  <Input
                     type="password"
                     id="password"
                     name="password"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                    placeholder="••••••••"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Confirm Password
                   </label>
-                  <input
+                  <Input
                     type="password"
                     id="confirm_password"
                     name="confirm_password"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                    placeholder="••••••••"
                   />
                 </div>
 
@@ -247,8 +254,6 @@ function SignUpForm() {
                   Login
                 </a>
               </div>
-
-              
             </div>
           </div>
         </div>
