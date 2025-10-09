@@ -67,11 +67,11 @@ function EditUserInfoModal({
           headers: {
             Authorization: "Bearer " + authTokens?.access,
           },
-          body: formD
+          body: formD,
         }
       );
       const result = await response.json();
-      console.log(result)
+      console.log(result);
       // try {
       //   const data = JSON.parse(result);
       //   console.log("Parsed JSON data:", data);
@@ -82,7 +82,7 @@ function EditUserInfoModal({
         throw new Error(result.message || "Something went wrong");
       }
       // console.log("Form submitted successfully:", result);
-      window.location.reload()
+      window.location.reload();
       // console.log(formD);
     } catch (error) {
       console.error("Submission error:", error.message);
@@ -177,22 +177,46 @@ function EditUserInfoModal({
                     <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                       <div>
                         <label>Facebook</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div>
                         <label>X.com</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div>
                         <label>Linkedin</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div>
                         <label>Instagram</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -207,6 +231,8 @@ function EditUserInfoModal({
                         <Input
                           type="text"
                           name="firstName"
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
                           value={userDetail.firstName}
                           onChange={handleChange}
                           // onInput={(e)=>{inputDetail.firstName = e.target.value}}
@@ -218,6 +244,8 @@ function EditUserInfoModal({
                         <Input
                           type="text"
                           name="lastName"
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
                           value={userDetail.lastName}
                           onChange={handleChange}
                         />
@@ -228,6 +256,8 @@ function EditUserInfoModal({
                         <Input
                           type="text"
                           name="email"
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
                           value={userDetail.email}
                           onChange={handleChange}
                         />
@@ -237,6 +267,8 @@ function EditUserInfoModal({
                         <Input
                           type="text"
                           name="email"
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
                           value={userDetail.email}
                           onChange={handleChange}
                         />
@@ -244,7 +276,13 @@ function EditUserInfoModal({
 
                       <div className="col-span-2 lg:col-span-1">
                         <label>Phone</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
                     </div>
                   </div>
@@ -256,17 +294,35 @@ function EditUserInfoModal({
                     <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                       <div className="col-span-2 lg:col-span-1">
                         <label>Country</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div className="col-span-2 lg:col-span-1">
                         <label>Province</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
 
                       <div className="col-span-2 lg:col-span-1">
                         <label>City</label>
-                        <Input type="text" value="" onChange={handleChange} />
+                        <Input
+                          type="text"
+                          value=""
+                          className="pr-20 rounded-md appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          variant="outlined"
+                          onChange={handleChange}
+                        />
                       </div>
                     </div>
                     <div className="flex items-center gap-3 px-2 mt-6 lg:justify-end">

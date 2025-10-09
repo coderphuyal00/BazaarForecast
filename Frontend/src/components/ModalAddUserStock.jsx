@@ -82,7 +82,7 @@ export default function ModalAddUserStock({
       setEditStockBuyPrice("");
       setEditStockPurchaseDate("");
     }
-  }, [formData]);
+  }, [formData,modalOpen]);
 
   useEffect(() => {
     setStockIDS(storedStock);
@@ -261,9 +261,9 @@ export default function ModalAddUserStock({
             }
           );
           let data = await response.json();
-          if (response.status === 200) {
-            console.log("Stock added on user stock list.");
-            console.log(data);
+          if (response.status === 204) {
+            console.log("Stock removed on user stock list.");
+            // console.log(data);
           } else {
             console.error("Error:", data);
           }
