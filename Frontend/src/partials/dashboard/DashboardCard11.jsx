@@ -1,7 +1,7 @@
 import { React, useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BarChart from "../../charts/BarChart03";
-import AuthContext from "../../components/context/AuthContext";
+import { useAuth } from "../../components/context/AuthContext";
 import StockDataContext from "../../components/context/StockDataContext";
 import { StockPriceDiff, StockClosePrice } from "../StockClosePrices";
 import { PlusIcon2, TrashBinIcon } from "../../icons";
@@ -11,134 +11,77 @@ import useLocalStorage from "../../components/LocalStorageHandler";
 import { getCssVariable } from "../../utils/Utils";
 
 function DashboardCard11() {
-  const { authTokens } = useContext(AuthContext);
-  const { fetchStocks } = useContext(StockDataContext);
+  const { authTokens, userDetails } = useAuth();
+  const { fetchStocks, UserWatchlist } = useContext(StockDataContext);
   const [userWatchList, setUserWatchList] = useState();
-  // const [watchList, setWatchList] = useState([]);
+  const [watchList, setWatchList] = useState();
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [trashIcon, setTrashIcon] = useState(null);
-  const [isStock, setStock] = useState();
-  const [stocks,setStocks] = useLocalStorage("stockWatchlist", []);
+  const [selectedStock, setSelectedStock] = useState(null);
+  const [stock_ids, setstock_ids] = useState([]);
+  const [stocks, setStocks] = useLocalStorage(`stockWatchlist`, []);
+  const [modalMode, setModalMode] = useState("");
   const navigate = useNavigate();
-  const chartData = {
-    labels: ["Reasons"],
-    datasets: [
-      {
-        label: "Having difficulties using the product",
-        data: [131],
-        backgroundColor: getCssVariable("--color-violet-500"),
-        hoverBackgroundColor: getCssVariable("--color-violet-600"),
-        barPercentage: 1,
-        categoryPercentage: 1,
-      },
-      {
-        label: "Missing features I need",
-        data: [100],
-        backgroundColor: getCssVariable("--color-violet-700"),
-        hoverBackgroundColor: getCssVariable("--color-violet-800"),
-        barPercentage: 1,
-        categoryPercentage: 1,
-      },
-      {
-        label: "Not satisfied about the quality of the product",
-        data: [81],
-        backgroundColor: getCssVariable("--color-sky-500"),
-        hoverBackgroundColor: getCssVariable("--color-sky-600"),
-        barPercentage: 1,
-        categoryPercentage: 1,
-      },
-      {
-        label: "The product doesn’t look as advertised",
-        data: [65],
-        backgroundColor: getCssVariable("--color-green-500"),
-        hoverBackgroundColor: getCssVariable("--color-green-600"),
-        barPercentage: 1,
-        categoryPercentage: 1,
-      },
-      {
-        label: "Other",
-        data: [72],
-        backgroundColor: getCssVariable("--color-gray-200"),
-        hoverBackgroundColor: getCssVariable("--color-gray-300"),
-        barPercentage: 1,
-        categoryPercentage: 1,
-      },
-    ],
+
+  useEffect(() => {
+    if (UserWatchlist) {
+      // console.log(UserWatchlist)
+      setUserWatchList(UserWatchlist);
+    } else {
+      setUserWatchList("loading");
+    }
+    // UserWatchlist.map((item) => {
+    //   addStock(item.stock.id);
+    // });
+  }, [UserWatchlist]);
+
+  const addStock = (newStockid) => {
+    setstock_ids((prev) => {
+      // Optionally check for duplicates here
+      const exists = prev.some((stock_id) => stock_id === newStockid);
+      if (exists) return prev;
+      return [...prev, newStockid];
+    });
   };
-  // const addStock=(newStock)=>{
-  //   setUserWatchList(prev=>{
-  //     [...prev,newStock]
-  //   });
-  // }
 
-  // useEffect(() => {
-  //   const temp_stock_details_arr=[]
-  //   const UserWatchlist = async (stock) => {
-  //       const response = await fetchStocks(stock);
-
-  //         // addStock(response);
-  //         temp_stock_details_arr.push(response)
-  //         // setUserWatchlist(JSON.parse(localStorage.getItem("user_stockWatchlist")));
-  //         // console.log(userWatchlist);
-  //         // console.log(response);
-  //         // setWatchList(response)
-
-  //         // localStorage.setItem("user_watchlist", JSON.stringify(apiData));
-  //         // console.log(apiData);
-  //       }
-  //       if(temp_stock_details_arr===""){
-  //       setUserWatchList(temp_stock_details_arr);
-  //       localStorage.setItem("stock_details",JSON.stringify(temp_stock_details_arr))
-  //       }
-  //       else{
-  //         setUserWatchList()
-  //       }
-  //       // console.log(temp_stock_details_arr)
-  //     // addStock(userWatchlist)
-  //   stocks.map((stock) => {
-  //     // UserWatchlist(stock);
-
-  //   });
-  //   // console.log(stocks);
-  //   console.log(userWatchList)
-  // }, [stocks]);
-  const deleteStock = (stock) => {
-    const index = stocks.indexOf(`${stock}`);
-    const updatedItems = stocks.filter((item) => item !== stock);
-    setStocks(updatedItems);
-     window.location.reload();
-    // localStorage.setItem("items", JSON.stringify(updatedItems));
-    // if(isStock!=""){
-    //   console.log(stocks.indexOf(`${stock}`))
-    // }
-  };
   const handleClick = (ticker) => {
     navigate(`/stock/${ticker}`);
     window.location.reload();
   };
-  useEffect(() => {
-    async function fetchAllStockDetails() {
-      const temp_stock_details_arr = await Promise.all(
-        stocks.map((stock) => fetchStocks(stock))
-      );
-      // localStorage.setItem("stock_details", JSON.stringify(temp_stock_details_arr.flat()));
-      setUserWatchList(temp_stock_details_arr.flat());
-    }
 
-    if (stocks.length > 0) {
-      fetchAllStockDetails();
-    }
-  }, [stocks]);
+  const handleDeleteClick = (stock) => {
+    setSelectedStock(stock);
+    setModalMode("remove");
+    setSearchModalOpen(true);
+  };
 
-  const handlePlusClick = () => {
-    return (
-      <SearchModal
-        id="search-modal"
-        searchId="search"
-        modalOpen={searchModalOpen}
-        setModalOpen={setSearchModalOpen}
-      />
-    );
+  const handleAddClick = () => {
+    setSelectedStock(null);
+    setModalMode("add");
+    setSearchModalOpen(true);
+  };
+  const calculateDiff = (item) => {
+    const prices = item.stock.prices;
+    const todayClosePrice = prices[prices.length - 1].close_price;
+    const yesterdayClosePrice = prices[prices.length - 2].close_price;
+
+    const priceDifference =
+      ((todayClosePrice - yesterdayClosePrice) / yesterdayClosePrice) * 100;
+    // if(todayClosePrice>yesterdayClosePrice){
+    //   return priceDifference
+    // }
+    const priceDiffSign =
+      priceDifference > 0
+        ? `+${priceDifference.toFixed(2)}`
+        : `${priceDifference.toFixed(2)}`;
+    const color =
+      todayClosePrice > yesterdayClosePrice
+        ? "oklch(0.527 0.154 150.069)"
+        : todayClosePrice === yesterdayClosePrice
+        ? "#000"
+        : "#e63939";
+
+    return `<span style="color: ${color}">${priceDiffSign}%</span> `;
   };
   return (
     <div className="flex flex-col col-span-full sm:col-span-8 bg-white dark:bg-gray-800 shadow-xs rounded-xl h-86 ">
@@ -153,7 +96,7 @@ function DashboardCard11() {
             }`}
             onClick={(e) => {
               e.stopPropagation();
-              setSearchModalOpen(true);
+              handleAddClick();
             }}
             aria-controls="search-modal"
           >
@@ -164,6 +107,9 @@ function DashboardCard11() {
             searchId="add-stock"
             modalOpen={searchModalOpen}
             setModalOpen={setSearchModalOpen}
+            storedStock={stock_ids}
+            clickedOn={modalMode}
+            stockData={selectedStock}
           />
         </div>
       </header>
@@ -192,23 +138,21 @@ function DashboardCard11() {
                     onMouseLeave={() => setTrashIcon(null)}
                   >
                     <div className="text-center text-nowrap flex flex-col gap-1 font-bold">
-                      <StockClosePrice
-                        currentTicker={item.stock.ticker}
-                        className="font-bold text-gray-900 dark:text-white"
-                      />
-                      <StockPriceDiff
-                        currentTicker={item.stock.ticker}
-                        className="dark:text-gray-300"
-                        displayLocation="user-stock-table"
+                      <p>Rs.{item.stock.prices.at(-1).close_price}</p>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: calculateDiff(item),
+                        }}
                       />
                     </div>
                     <div className="flex items-center justify-center hover:bg-white/30 hover:backdrop-blur-sm dark:hover:bg-neutral-900/10 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-full w-full">
                       {trashIcon === item.stock.ticker && (
-                        <button title="Delete Stock"
+                        <button
+                          title="Delete Stock"
                           className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full ml-3 `}
                           onClick={(e) => {
                             e.stopPropagation();
-                            deleteStock(item.stock.ticker);
+                            handleDeleteClick(item);
                           }}
                         >
                           <TrashBinIcon className="text-gray-900 dark:text-gray-100 text-xl" />

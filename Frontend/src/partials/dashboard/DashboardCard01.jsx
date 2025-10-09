@@ -128,6 +128,18 @@ function DashboardCard01() {
       });
   }, []);
 
+  useEffect(()=>{
+    const fetchStock=async()=>{
+      const response=await fetch(`http://127.0.0.1:8000/api/stock/detail/ADBL/1D/`,{
+        method:"GET"
+      })
+      const data=await response.json()
+      if(response.status===200){
+        console.log(data)
+      }
+    }
+    fetchStock()
+  },[])
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <div className="px-5 pt-5">
