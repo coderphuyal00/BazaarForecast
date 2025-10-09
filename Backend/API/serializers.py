@@ -12,20 +12,20 @@ class StockSerializer(ModelSerializer):
     class Meta:
         model=Stock
         fields='__all__'
+
+
 # Get User Details
 class UserSerializer(ModelSerializer):
     class Meta:
         model=CustomUserModel
-        fields=['id','first_name','last_name','email']
-        # fields='__all__'
+        # fields=['id','first_name','last_name','email']
+        fields='__all__'
         # exclude=['is_active','password']
-
-class CustomUserSerializer(ModelSerializer):
-    class Meta:
-        model=CustomUserModel
-        # fields=['first_name','last_name','email','username']
-        # fields='__all__'
-        exclude=['is_active','password']
+        extra_kwargs={
+            "is_active":{'read_only':True},
+            "password":{'read_only':True},
+            "id":{'read_only':True},
+        }
 
 # Stock Daily Price
 class stockpriceSerializer(serializers.Serializer):
@@ -38,30 +38,45 @@ class stockpriceSerializer(serializers.Serializer):
     volume=serializers.IntegerField()
 
 class TechnicalDataSerializer(ModelSerializer):
-        stock=StockSerializer(read_only=True)   
+        # stock=StockSerializer(read_only=True)   
         class Meta:
             model=StockTechnicalDetails
             fields='__all__'
     
+class StockDetailSerializer(ModelSerializer):
+    prices = serializers.SerializerMethodField()
 
+    class Meta:
+        model = Stock
+        fields = ['id','prices','name','ticker','sector','market_cap','eps','pe_ratio','dividend','bvps','paid_capital','listed_share','year_yield']
+        # fields='__all__'  # Keep all stock fields plus 'prices'
+
+    def get_prices(self, obj):
+        price_data = self.context.get('price_data', {})
+        return price_data
+    
 # Get User Stock Details 
 class UserStockSerializer(ModelSerializer):   
     # Get Limited Stock Details 
-    class StockNameSerializer(ModelSerializer):
+    stock=serializers.SerializerMethodField()
+    class UserCustomSerializer(ModelSerializer):
         class Meta:
-            model=Stock
-            fields=['ticker','name','id']
-    stock=StockNameSerializer(read_only=True)
-    user=UserSerializer(read_only=True)
+            model=CustomUserModel
+            fields=['id','first_name','last_name','email']
+    user=UserCustomSerializer()
     class Meta:
         model=UserStocks
         fields=['id','buy_price', 'purchase_date', 'quantity', 'stock', 'user']
+    def get_stock(self, obj):
+        price_data = self.context.get('price_data', {}).get(obj.stock.id, [])
+        serializer = StockDetailSerializer(obj.stock, context={'price_data': price_data})
+        return serializer.data
    
 #Update user stocks
 class UpdateUserStockSerializer(ModelSerializer):   
     # Get Limited Stock Details
     user=UserSerializer(read_only=True)
-    stock=StockSerializer(read_only=True)
+    stock=StockDetailSerializer(read_only=True)
     class Meta:
         model=UserStocks
         fields=['buy_price', 'purchase_date', 'quantity', 'stock', 'user']
@@ -108,6 +123,9 @@ class RegisterSerializer(serializers.ModelSerializer):
    
    def create(self,validated_data):
         user=User.objects.create_user(
+            username=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             email=validated_data['email'],
             password=validated_data['password']           
         )
@@ -140,7 +158,11 @@ class StoreUserWatchList(serializers.ModelSerializer):
 
 class UserWatchListSerializer(serializers.ModelSerializer):
     # stock = serializers.PrimaryKeyRelatedField(queryset=Stock.objects.all())
-    stock=StockSerializer(read_only=True)
+    stock=serializers.SerializerMethodField()
     class Meta:
         model=UserWatchList
         fields='__all__'
+    def get_stock(self, obj):
+        price_data = self.context.get('price_data', {}).get(obj.stock.id, [])
+        serializer = StockDetailSerializer(obj.stock, context={'price_data': price_data})
+        return serializer.data

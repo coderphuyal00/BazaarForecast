@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList
 from Account.models import CustomUserModel
-from .serializers import CustomUserSerializer,UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer
+from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer,StockDetailSerializer
 from rest_framework.permissions import IsAuthenticated
 #register users
 from rest_framework.views import APIView
@@ -48,7 +48,7 @@ def getUser(request):
     return Response(serializer.data)
 
 class UserDetailsUpdateView(generics.RetrieveUpdateAPIView):
-    serializer_class=CustomUserSerializer
+    serializer_class=UserSerializer
     permission_classes=[permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -64,6 +64,7 @@ def getIndexesprice(request,index):
         return Response(serializer.validated_data)
     else:
         return Response(serializer.errors, status=400)
+    
 @api_view(['GET'])
 def getStockprice(request,stock,resolution):
     data = getStockPrice(f'{stock}',f'{resolution}')
@@ -74,6 +75,28 @@ def getStockprice(request,stock,resolution):
         return Response(serializer.validated_data)
     else:
         return Response(serializer.errors, status=400)
+
+@api_view(['GET'])
+def get_stock_detail_with_price(request, stock, resolution):
+    # Step 1: Fetch Stock object for 'stock'
+    try:
+        stock_instance = Stock.objects.get(ticker=stock)
+    except Stock.DoesNotExist:
+        return Response({'error': 'Stock not found'}, status=404)
+
+    # Step 2: Fetch dynamic price data (simulate your function or call directly)
+    price_data = getStockPrice(stock, resolution)  # Should return list of dict
+
+    # Optional: Validate price data with stockpriceSerializer if desired
+    price_serializer = stockpriceSerializer(data=price_data, many=True)
+    if not price_serializer.is_valid():
+        return Response(price_serializer.errors, status=400)
+
+    # Step 3: Serialize stock with price data added to context
+    serializer = StockDetailSerializer(stock_instance, context={'price_data': price_serializer.validated_data})
+
+    # Step 4: Return combined data
+    return Response(serializer.data)
 
 # @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
@@ -233,6 +256,38 @@ def store_user_watchlist(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def userwatchlistView(request):
-    watchlist=UserWatchList.objects.filter(user_id=request.user.id)
+    watchlist=UserWatchList.objects.select_related('stock').filter(user_id=request.user.id)
     serializer=UserWatchListSerializer(watchlist,many=True)
+    return Response(serializer.data)
+
+class UserWatchlistStockRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
+    queryset = UserWatchList.objects.all()  # Queryset of all user stock records
+    serializer_class = UserWatchListSerializer
+    permission_classes=[permissions.IsAuthenticated]
+    lookup_field = 'pk'  # default, can be omitted if 'pk' is used
+
+@api_view(['GET'])
+def user_stock_list(request):
+    user_stocks = UserStocks.objects.select_related('stock', 'user').all()
+
+    # Example dynamic price data dictionary keyed by stock id
+    price_data = {}
+    for us in user_stocks:
+        price_data[us.stock.id] = getStockPrice(us.stock.ticker, '1D')  # your price fetch logic
+
+    serializer = UserStockSerializer(user_stocks, many=True, context={'price_data': price_data})
+
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def user_stock_watchlist(request):
+    user_stocks = UserWatchList.objects.select_related('stock', 'user').all()
+
+    # Example dynamic price data dictionary keyed by stock id
+    price_data = {}
+    for us in user_stocks:
+        price_data[us.stock.id] = getStockPrice(us.stock.ticker, '1D')  # your price fetch logic
+
+    serializer = UserWatchListSerializer(user_stocks, many=True, context={'price_data': price_data})
+
     return Response(serializer.data)
