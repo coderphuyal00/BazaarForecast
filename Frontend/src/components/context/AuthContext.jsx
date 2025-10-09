@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect,useContext } from "react";
 const AuthContext = createContext();
 
 export default AuthContext;
@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const tokensFromStorage = localStorage.getItem("authTokens")
     ? JSON.parse(localStorage.getItem("authTokens"))
     : null;
-
+  
   const [authTokens, setAuthTokens] = useState(tokensFromStorage);
   const [user, setUser] = useState(
     tokensFromStorage ? tokensFromStorage.access : null
@@ -22,8 +22,8 @@ export const AuthProvider = ({ children }) => {
   });
   // const history=useHistory()
 
-  let loginUser = async (e) => {
-    e.preventDefault();
+  let loginUser = async (email,password) => {
+    // e.preventDefault();
     try {
       let response = await fetch("http://127.0.0.1:8000/api/token/", {
         method: "POST",
@@ -31,9 +31,9 @@ export const AuthProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: e.target.email.value,
-          email: e.target.email.value,
-          password: e.target.password.value,
+          username: email,
+          email: email,
+          password: password
         }),
       });
       if (!response.ok) {
@@ -200,4 +200,8 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
