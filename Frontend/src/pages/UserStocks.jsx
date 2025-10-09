@@ -23,22 +23,22 @@ function UserStocks() {
   const [editIcon, seteditIcon] = useState("");
   const [modalMode, setModalMode] = useState("");
   const [selectedStock, setSelectedStock] = useState(null);
-  const [stock_ids,setstock_ids]= useState([])
+  const [stock_ids, setstock_ids] = useState([]);
   const { UserStocks } = useContext(StockDataContext);
   useEffect(() => {
-    UserStocks().then((data) => {
-      setUserStock(data);
-      data.map((item)=>{
-        addStock(item.stock.id)
-      })
-    });
+    if (UserStocks) {
+      // console.log(UserWatchlist)
+      setUserStock(UserStocks);
+      console.log(UserStocks)
+    } else {
+      setUserWatchList("loading");
+    }
   }, [UserStocks]);
 
-
-const addStock = (newStockid) => {
-    setstock_ids(prev => {
+  const addStock = (newStockid) => {
+    setstock_ids((prev) => {
       // Optionally check for duplicates here
-      const exists = prev.some(stock_id => stock_id === newStockid);
+      const exists = prev.some((stock_id) => stock_id === newStockid);
       if (exists) return prev;
       return [...prev, newStockid];
     });
@@ -50,21 +50,45 @@ const addStock = (newStockid) => {
   };
 
   const handleEditClick = (stock) => {
-  setSelectedStock(stock);
-  setModalMode("edit");
-  setSearchModalOpen(true);
-};
+    setSelectedStock(stock);
+    setModalMode("edit");
+    setSearchModalOpen(true);
+  };
   const handleDeleteClick = (stock) => {
-  setSelectedStock(stock);
-  setModalMode("remove");
-  setSearchModalOpen(true);
-};
+    setSelectedStock(stock);
+    setModalMode("remove");
+    setSearchModalOpen(true);
+  };
 
-const handleAddClick = () => {
-  setSelectedStock(null);
-  setModalMode("add");
-  setSearchModalOpen(true);
-};
+  const handleAddClick = () => {
+    setSelectedStock(null);
+    setModalMode("add");
+    setSearchModalOpen(true);
+  };
+  const calculateDiff = ({item}) => {
+    const prices = item.stock.prices;
+    const todayClosePrice = prices[prices.length - 1].close_price;
+    const yesterdayClosePrice = prices[prices.length - 2].close_price;
+
+    const priceDifference =
+      ((todayClosePrice - yesterdayClosePrice) / yesterdayClosePrice) * 100;
+    // if(todayClosePrice>yesterdayClosePrice){
+    //   return priceDifference
+    // }
+    const priceDiffSign =
+      priceDifference > 0
+        ? `+${priceDifference.toFixed(2)}`
+        : `${priceDifference.toFixed(2)}`;
+    const color =
+      todayClosePrice > yesterdayClosePrice
+        ? "oklch(0.527 0.154 150.069)"
+        : todayClosePrice === yesterdayClosePrice
+        ? "#000"
+        : "#e63939";
+
+    // return (`<span style="color: ${color}; font-weight: bold">${priceDiffSign}%</span> `);
+    return (<span style="color: ${color}; font-weight: bold">${priceDiffSign}%</span>)
+  };
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -96,9 +120,9 @@ const handleAddClick = () => {
                   <h2 className="font-semibold text-gray-800 dark:text-gray-100">
                     Stock List
                   </h2>
-                  <div >
+                  <div>
                     <Button
-                    title="Add Stock"
+                      title="Add Stock"
                       type="submit"
                       variant="filled"
                       className={`w-32 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-600/50 dark:text-gray-200 dark:hover:bg-gray-600/80 ${
@@ -108,7 +132,7 @@ const handleAddClick = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         // openModal("add");
-                        handleAddClick()
+                        handleAddClick();
                       }}
                     >
                       Add Stock
@@ -195,25 +219,25 @@ const handleAddClick = () => {
                           </td>
                           <td className="p-2">
                             <div className="text-center">
-                              <StockClosePrice
-                                currentTicker={item.stock.ticker}
-                                className="dark:text-gray-100 "
-                              />
+                              <p>Rs.{item.stock.prices.at(-1).close_price}</p>
+                              
                             </div>
                           </td>
                           <td className="p-2 text-center">
                             <div className="text-sm ">
-                              <StockPriceDiff
-                                currentTicker={item.stock.ticker}
-                                className="dark:text-gray-300"
-                                displayLocation="user-stock-table"
-                              />
+                              {/* <div
+                                dangerouslySetInnerHTML={{
+                                  __html: calculateDiff(item),
+                                }}
+                              /> */}
+                              {/* <calculateDiff item={item}/> */}
+                              <StockPriceDiff TickerPrices={item.stock.prices} displayLocation="user-stock-table"/>
                             </div>
                           </td>
                           <td className="p-2">
                             <div className="text-center text-gray-500 dark:text-gray-100">
                               <StockValue
-                                currentTicker={item.stock.ticker}
+                                TickerPrices={item.stock.prices}
                                 stockQuantity={item.quantity}
                               />
                             </div>
@@ -225,7 +249,7 @@ const handleAddClick = () => {
                           >
                             <div className="text-center text-gray-500 dark:text-gray-100">
                               <StockNepseCharges
-                                currentTicker={item.stock.ticker}
+                                TickerPrice={item.stock.prices}
                                 sharesCount={item.quantity}
                                 buy_price={item.buy_price}
                               />
@@ -238,31 +262,10 @@ const handleAddClick = () => {
                                     className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full ml-3 `}
                                     onClick={(e) => {
                                       e.stopPropagation();
-                                      // setSearchModalOpen(true);
-                                      // setModalMode("edit");
-                                      // //   setstockQuantity(item.quantity);
-                                      // //   setstockTicker(item.stock.ticker);
-                                      // //   setstockBuyPrice(item.buy_price);
-                                      // //   setstockBuyDate(item.purchase_date);
-                                      // //   setstockID(item.stock.id);
-                                      // //   console.log(item.stock.id);
-                                      // //   console.log(stockID);
-                                      // //   console.log(isPurchaseDate);
-                                      // //   console.log(isBuyPrice);
-                                      // //   console.log(isQuantity);
-                                      // //   console.log(isTicker);
-                                      // handleValues(
-                                      //   item.stock.id,
-                                      //   item.quantity,
-                                      //   item.purchase_date,
-                                      //   item.buy_price,
-                                      //   item.stock.ticker
-                                      // );
-                                      handleEditClick(item)
+                                      handleEditClick(item);
                                     }}
                                   >
                                     <PencilIcon className="text-gray-900 dark:text-gray-100 text-xl" />
-                                   
                                   </button>
                                 )}
                               </div>
@@ -274,7 +277,7 @@ const handleAddClick = () => {
                                     className={`w-10 h-10 flex items-center justify-center cursor-pointer rounded-full ml-3 `}
                                     onClick={(e) => {
                                       e.stopPropagation();
-                                      handleDeleteClick(item)
+                                      handleDeleteClick(item);
                                     }}
                                   >
                                     <TrashBinIcon className="text-gray-900 dark:text-gray-100 text-xl" />

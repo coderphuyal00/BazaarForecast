@@ -35,7 +35,7 @@ function UserDetails() {
         username: "loading",
       });
     }
-    console.log(userDetails);
+    // console.log(userDetails);
   }, [userDetails]);
   return (
     <div className="flex h-screen overflow-hidden">
