@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from Account.models import CustomUserModel
+from django.utils import timezone
 # Stores Stock Details 
 class Stock(models.Model):
     ticker=models.CharField(max_length=10,unique=True)
@@ -69,3 +70,18 @@ class UserWatchList(models.Model):
 
     def __str__(self):
         return f"{self.user.username} Watchlist - {self.stock.name}"
+
+class StockPrediction(models.Model):
+    stock = models.ForeignKey(Stock,related_name='predicted_stock_price', on_delete=models.CASCADE)  # e.g., AAPL, TSLA
+    predicted_price = models.DecimalField(max_digits=10, decimal_places=2)  # Predicted price
+    prediction_date = models.DateTimeField(default=timezone.now)  # When prediction was made
+    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for record creation
+
+    class Meta:
+        unique_together = ['stock', 'prediction_date']  # Ensure unique predictions per symbol and date
+        indexes = [
+            models.Index(fields=['stock', 'prediction_date']),  # Optimize queries
+        ]
+
+    def __str__(self):
+        return f"{self.stock.ticker} - ${self.predicted_price} on {self.prediction_date}"
