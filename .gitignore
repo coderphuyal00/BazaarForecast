@@ -1,11 +1,14 @@
 # Environments
 .env
 .venv
+.bfvenv
 env/
 venv/
+bfvenv/
 ENV/
 env.bak/
 venv.bak/
+bfvenv.bak/
 
 # Django Stuffs
 *.log
@@ -13,3 +16,4 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 Start virtual env.txt
+Backend/templates/index_data.html
