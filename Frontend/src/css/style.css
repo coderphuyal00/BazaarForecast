@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=fallback');
 
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import './additional-styles/utility-patterns.css' layer(components);
 
 @plugin "@tailwindcss/forms" {
@@ -117,6 +120,24 @@
   --text-6xl--letter-spacing: -0.02em;
 
   --breakpoint-xs: 480px;
+  --animate-marquee: marquee 100s linear infinite;
+  --animate-marquee2: marquee2 100s linear infinite;
+
+  @keyframes marquee {
+   
+            0%{ transform: translateX(0%) }
+            100%{ transform: translateX(-100%) }
+          
+         
+  }
+  @keyframes marquee2 {
+   
+           0%{ transform: translateX(100%) }
+            100% { transform: translateX(0%) }
+          
+         
+  }
+  
 }
 
 /*
@@ -134,5 +155,12 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+
+@layer utilities {
+  .animation-pause {
+    animation-play-state: paused;
   }
 }
