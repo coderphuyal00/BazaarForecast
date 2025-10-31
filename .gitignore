@@ -16,4 +16,5 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 Start virtual env.txt
+
 Backend/templates/index_data.html
