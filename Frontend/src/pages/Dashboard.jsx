@@ -22,6 +22,7 @@ import NepseLineChart from "../partials/dashboard/NepseIndexChart";
 import IndexCard from "../partials/dashboard/IndexCard";
 import CalenderLayout from "../partials/dashboard/Calender";
 import InfiniteScroll from "../partials/InfiniteScroll";
+import UserStocksTable from "../partials/UserStocksTable";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,6 +55,7 @@ function Dashboard() {
             {/* Cards */}
 
             <div className="grid grid-cols-12 gap-6">
+              <InfiniteScroll/>
               <DashboardCard01 />
               <DashboardCard02 />
               <DashboardCard03 />
@@ -64,24 +66,27 @@ function Dashboard() {
               {/* <DashboardCard04 /> */}
               {/* Line chart (Real Time Value) */}
               <DashboardCard11 />
-              <DashboardCard05 />
+              {/* User Stocks Table */}
+              <UserStocksTable/>
+              {/* <DashboardCard05 /> */}
               {/* Doughnut chart (Top Countries) */}
-              <DashboardCard06 />
+              {/* <DashboardCard06 /> */}
               {/* Table (Top Channels) */}
-              <DashboardCard07 />
+              {/* <DashboardCard07 /> */}
               {/* Card (Reasons for Refunds) */}
               {/* Line chart (Sales Over Time) */}
-              <DashboardCard08 />
+              {/* <DashboardCard08 /> */}
               {/* Stacked bar chart (Sales VS Refunds) */}
-              <DashboardCard09 />
+              {/* <DashboardCard09 /> */}
               {/* Card (Customers) */}
-              <DashboardCard10 />
+              {/* <DashboardCard10 /> */}
               {/* Card (Recent Activity) */}
-              <DashboardCard12 />
+              {/* <DashboardCard12 /> */}
               {/* Card (Income/Expenses) */}
-              <DashboardCard13 />
+              {/* <DashboardCard13 /> */}
+              
             </div>
-            <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            {/* <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
               <div class="grid grid-cols-12 gap-4 md:gap-6">
                 <div class="col-span-12">
                   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
@@ -89,7 +94,7 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </main>
 
