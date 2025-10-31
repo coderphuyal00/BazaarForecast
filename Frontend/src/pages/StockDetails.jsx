@@ -1,10 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import IndexCard from "../partials/dashboard/IndexCard";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 import SearchBox from "../components/ui/search";
+import Loader from "../components/ui/spinner"
 import RealTimeChart from "../charts/RealtimeChart";
 import LineChart from "../charts/LineChart";
+import { Spinner } from "@material-tailwind/react";
 import { chartAreaGradient } from "../charts/ChartjsConfig";
 import { getCssVariable, adjustColorOpacity } from "../utils/Utils";
 import { AngleUpIcon, AngleDownIcon } from "../icons";
@@ -37,213 +39,219 @@ function StockDetails() {
   const [pricePointDiff, setPricePointDiff] = useState();
   const [isGain, setGain] = useState();
   const [isEqual, setEqual] = useState();
-  const [labels,setLabels]=useState([])
-  const [closePrices,setClosePrices]=useState([])
+  const [labels, setLabels] = useState([]);
+  const [closePrices, setClosePrices] = useState([]);
   const [latestDate, setLatestDate] = useState();
   const [time, setTime] = useState();
+  const [prediction, setPrediction] = useState(null);
+  const pollInterval = useRef(null);
+
+  // new
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   // const { searchedstockData, fetchStocks } = useContext(StockDataContext);
   const { ticker } = useParams();
-  useEffect(() => {
-    const fetchStockPrice = (ticker) => {
-      fetch(`http://127.0.0.1:8000/api/stock/1D/${ticker}/`)
-        .then((response) => response.json())
-        .then((data) => {
-          // Format data to chart.js structure: labels and data points
-          // Assuming the API returns an array with date and price fields, e.g.:
-          // [{ date: "2025-07-20", price: 1400 }, { date: "2025-07-21", price: 1420 }, ...]
-          const labels = data.map(
-            (searchedstockData) => searchedstockData.date
-          );
-          const close_prices = data.map(
-            (searchedstockData) => searchedstockData.close_price
-          );
-          const high_prices = data.map(
-            (searchedstockData) => searchedstockData.high_price
-          );
-          const low_prices = data.map(
-            (searchedstockData) => searchedstockData.low_price
-          );
-          const volume = data.map(
-            (searchedstockData) => searchedstockData.volume
-          );
-          // const latestPrice=prices.pop()
-          let lastIndex = close_prices.length;
-          let lastElement = close_prices[lastIndex - 1];
-          let lastDate = labels[lastIndex - 1];
-          const date = new Date(lastDate);
-          setLatestDate(
-            date
-              .toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: undefined,
-              })
-              .replace(/\//g, ",")
-          );
-          setTodayClosePrice(lastElement);
-          setTodayHighPrice(high_prices[lastIndex - 1]);
-          setTodayLowPrice(low_prices[lastIndex - 1]);
-          setTodayVolume(volume[lastIndex - 1]);
-          const diffPercentage = () => {
-            let secondLastElement = close_prices[lastIndex - 2];
-            // console.log(secondLastElement);
-            let percentageDiff =
-              ((lastElement - secondLastElement) / secondLastElement) * 100;
-            if (lastElement > secondLastElement) {
-              setGain(true);
-            } else {
-              setGain(false);
-            }
-            function truncateDecimals(num, digits) {
-              const multiplier = Math.pow(10, digits);
-              return ~~(num * multiplier) / multiplier;
-            }
-            return truncateDecimals(percentageDiff, 2);
-          };
-          setPriceDiff(diffPercentage());
-          const diffPoint = () => {
-            let secondLastElement = close_prices[lastIndex - 2];
-            // console.log(secondLastElement);
-            let pointDiff = lastElement - secondLastElement;
-            if (lastElement > secondLastElement) {
-              setGain(true);
-            } else {
-              setGain(false);
-            }
-            function truncateDecimals(num, digits) {
-              const multiplier = Math.pow(10, digits);
-              return ~~(num * multiplier) / multiplier;
-            }
-            return truncateDecimals(pointDiff, 2);
-          };
-          setPricePointDiff(diffPoint());
+  // useEffect(() => {
+  //   const fetchStockPrice = (ticker) => {
+  //     fetch(`http://127.0.0.1:8000/api/stock/1D/${ticker}/`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         // Format data to chart.js structure: labels and data points
+  //         // Assuming the API returns an array with date and price fields, e.g.:
+  //         // [{ date: "2025-07-20", price: 1400 }, { date: "2025-07-21", price: 1420 }, ...]
+  //         const labels = data.map(
+  //           (searchedstockData) => searchedstockData.date
+  //         );
+  //         const close_prices = data.map(
+  //           (searchedstockData) => searchedstockData.close_price
+  //         );
+  //         const high_prices = data.map(
+  //           (searchedstockData) => searchedstockData.high_price
+  //         );
+  //         const low_prices = data.map(
+  //           (searchedstockData) => searchedstockData.low_price
+  //         );
+  //         const volume = data.map(
+  //           (searchedstockData) => searchedstockData.volume
+  //         );
+  //         // const latestPrice=prices.pop()
+  //         let lastIndex = close_prices.length;
+  //         let lastElement = close_prices[lastIndex - 1];
+  //         let lastDate = labels[lastIndex - 1];
+  //         const date = new Date(lastDate);
+  //         setLatestDate(
+  //           date
+  //             .toLocaleDateString("en-US", {
+  //               month: "long",
+  //               day: "numeric",
+  //               year: undefined,
+  //             })
+  //             .replace(/\//g, ",")
+  //         );
+  //         setTodayClosePrice(lastElement);
+  //         setTodayHighPrice(high_prices[lastIndex - 1]);
+  //         setTodayLowPrice(low_prices[lastIndex - 1]);
+  //         setTodayVolume(volume[lastIndex - 1]);
+  //         const diffPercentage = () => {
+  //           let secondLastElement = close_prices[lastIndex - 2];
+  //           // console.log(secondLastElement);
+  //           let percentageDiff =
+  //             ((lastElement - secondLastElement) / secondLastElement) * 100;
+  //           if (lastElement > secondLastElement) {
+  //             setGain(true);
+  //           } else {
+  //             setGain(false);
+  //           }
+  //           function truncateDecimals(num, digits) {
+  //             const multiplier = Math.pow(10, digits);
+  //             return ~~(num * multiplier) / multiplier;
+  //           }
+  //           return truncateDecimals(percentageDiff, 2);
+  //         };
+  //         setPriceDiff(diffPercentage());
+  //         const diffPoint = () => {
+  //           let secondLastElement = close_prices[lastIndex - 2];
+  //           // console.log(secondLastElement);
+  //           let pointDiff = lastElement - secondLastElement;
+  //           if (lastElement > secondLastElement) {
+  //             setGain(true);
+  //           } else {
+  //             setGain(false);
+  //           }
+  //           function truncateDecimals(num, digits) {
+  //             const multiplier = Math.pow(10, digits);
+  //             return ~~(num * multiplier) / multiplier;
+  //           }
+  //           return truncateDecimals(pointDiff, 2);
+  //         };
+  //         setPricePointDiff(diffPoint());
 
-          setChartData({
-            labels,
-            datasets: [
-              {
-                label: "NEPSE Index Price",
-                data: close_prices,
-                fill: false,
-                backgroundColor: function (context) {
-                  const chart = context.chart;
-                  const { ctx, chartArea } = chart;
-                  return chartAreaGradient(ctx, chartArea, [
-                    {
-                      stop: 0,
-                      color: adjustColorOpacity(
-                        getCssVariable("--color-violet-500"),
-                        0
-                      ),
-                    },
-                    {
-                      stop: 1,
-                      color: adjustColorOpacity(
-                        getCssVariable("--color-violet-500"),
-                        0.2
-                      ),
-                    },
-                  ]);
-                },
-                borderColor: getCssVariable("--color-violet-500"),
-                borderWidth: 2,
-                pointRadius: 0,
-                pointHoverRadius: 3,
-                pointBackgroundColor: getCssVariable("--color-violet-500"),
-                pointHoverBackgroundColor: getCssVariable("--color-violet-500"),
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 0,
-                clip: 10,
-                tension: 0.2,
-              },
-            ],
-          });
-        });
-    };
-    // fetchStockPrice(ticker);
+  //         setChartData({
+  //           labels,
+  //           datasets: [
+  //             {
+  //               label: "NEPSE Index Price",
+  //               data: close_prices,
+  //               fill: false,
+  //               backgroundColor: function (context) {
+  //                 const chart = context.chart;
+  //                 const { ctx, chartArea } = chart;
+  //                 return chartAreaGradient(ctx, chartArea, [
+  //                   {
+  //                     stop: 0,
+  //                     color: adjustColorOpacity(
+  //                       getCssVariable("--color-violet-500"),
+  //                       0
+  //                     ),
+  //                   },
+  //                   {
+  //                     stop: 1,
+  //                     color: adjustColorOpacity(
+  //                       getCssVariable("--color-violet-500"),
+  //                       0.2
+  //                     ),
+  //                   },
+  //                 ]);
+  //               },
+  //               borderColor: getCssVariable("--color-violet-500"),
+  //               borderWidth: 2,
+  //               pointRadius: 0,
+  //               pointHoverRadius: 3,
+  //               pointBackgroundColor: getCssVariable("--color-violet-500"),
+  //               pointHoverBackgroundColor: getCssVariable("--color-violet-500"),
+  //               pointBorderWidth: 2,
+  //               pointHoverBorderWidth: 0,
+  //               clip: 10,
+  //               tension: 0.2,
+  //             },
+  //           ],
+  //         });
+  //       });
+  //   };
+  //   // fetchStockPrice(ticker);
 
-    const getStockDetails = () => {
-      console.log(searchedstockData?.prices);
-      // setlabels(searchedstockData?.prices.map((item) => item.date));
-      // // const close_prices = searchedstockData?.prices.map(
-      // //   (item) => item.close_price
-      // // );
-      // setclosePrices(searchedstockData?.prices.map(
-      //   (item) => item.close_price
-      // ))
-      // console.log(labels);
-      // console.log(close_prices);
-      const todayClosePrice = searchedstockData?.prices.at(-1).close_price;
-      const yesterdayClosePrice = searchedstockData?.prices.at(-2).close_price;
-      setTodayClosePrice(searchedstockData?.prices.at(-1).close_price);
-      setTodayHighPrice(searchedstockData?.prices.at(-1).high_price);
-      setTodayLowPrice(searchedstockData?.prices.at(-1).low_price);
-      setTodayVolume(searchedstockData?.prices.at(-1).volume);
-      const diffPercentage = () => {
-        // const todayClosePrice = searchedstockData?.prices.at(-1).close_price;
-        // const yesterdayClosePrice = searchedstockData?.prices.at(-2).close_price;
-        const priceDifference =
-          ((todayClosePrice - yesterdayClosePrice) / yesterdayClosePrice) * 100;
-        // console.log(secondLastElement);
+  //   const getStockDetails = () => {
+  //     console.log(searchedstockData?.prices);
+  //     // setlabels(searchedstockData?.prices.map((item) => item.date));
+  //     // // const close_prices = searchedstockData?.prices.map(
+  //     // //   (item) => item.close_price
+  //     // // );
+  //     // setclosePrices(searchedstockData?.prices.map(
+  //     //   (item) => item.close_price
+  //     // ))
+  //     // console.log(labels);
+  //     // console.log(close_prices);
+  //     const todayClosePrice = searchedstockData?.prices.at(-1).close_price;
+  //     const yesterdayClosePrice = searchedstockData?.prices.at(-2).close_price;
+  //     setTodayClosePrice(searchedstockData?.prices.at(-1).close_price);
+  //     setTodayHighPrice(searchedstockData?.prices.at(-1).high_price);
+  //     setTodayLowPrice(searchedstockData?.prices.at(-1).low_price);
+  //     setTodayVolume(searchedstockData?.prices.at(-1).volume);
+  //     const diffPercentage = () => {
+  //       // const todayClosePrice = searchedstockData?.prices.at(-1).close_price;
+  //       // const yesterdayClosePrice = searchedstockData?.prices.at(-2).close_price;
+  //       const priceDifference =
+  //         ((todayClosePrice - yesterdayClosePrice) / yesterdayClosePrice) * 100;
+  //       // console.log(secondLastElement);
 
-        if (todayClosePrice > yesterdayClosePrice) {
-          setGain(true);
-        } else if (todayClosePrice == yesterdayClosePrice) {
-          setEqual(true);
-        } else {
-          setGain(false);
-        }
+  //       if (todayClosePrice > yesterdayClosePrice) {
+  //         setGain(true);
+  //       } else if (todayClosePrice == yesterdayClosePrice) {
+  //         setEqual(true);
+  //       } else {
+  //         setGain(false);
+  //       }
 
-        setPriceDiff(priceDifference.toFixed(2));
-        function truncateDecimals(num, digits) {
-          const multiplier = Math.pow(10, digits);
-          return ~~(num * multiplier) / multiplier;
-        }
-        return truncateDecimals(priceDifference, 2);
-      };
-      setPriceDiff(diffPercentage());
-      const diffPoint = () => {
-        // let secondLastElement = close_prices[lastIndex - 2];
-        // console.log(secondLastElement);
-        let pointDiff = todayClosePrice - yesterdayClosePrice;
-        if (todayClosePrice > yesterdayClosePrice) {
-          setGain(true);
-        } else {
-          setGain(false);
-        }
-        function truncateDecimals(num, digits) {
-          const multiplier = Math.pow(10, digits);
-          return ~~(num * multiplier) / multiplier;
-        }
-        return truncateDecimals(pointDiff, 2);
-      };
-      setPricePointDiff(diffPoint());
-      
-    };
+  //       setPriceDiff(priceDifference.toFixed(2));
+  //       function truncateDecimals(num, digits) {
+  //         const multiplier = Math.pow(10, digits);
+  //         return ~~(num * multiplier) / multiplier;
+  //       }
+  //       return truncateDecimals(priceDifference, 2);
+  //     };
+  //     setPriceDiff(diffPercentage());
+  //     const diffPoint = () => {
+  //       // let secondLastElement = close_prices[lastIndex - 2];
+  //       // console.log(secondLastElement);
+  //       let pointDiff = todayClosePrice - yesterdayClosePrice;
+  //       if (todayClosePrice > yesterdayClosePrice) {
+  //         setGain(true);
+  //       } else {
+  //         setGain(false);
+  //       }
+  //       function truncateDecimals(num, digits) {
+  //         const multiplier = Math.pow(10, digits);
+  //         return ~~(num * multiplier) / multiplier;
+  //       }
+  //       return truncateDecimals(pointDiff, 2);
+  //     };
+  //     setPricePointDiff(diffPoint());
+  //   };
 
-    getStockDetails();
-    // console.log(searchedstockData);
+  //   getStockDetails();
+  //   // console.log(searchedstockData);
 
-    const getStockTechnicalDetails = async (ticker) => {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/stock/${ticker}/`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + authTokens?.access,
-          },
-        }
-      );
-      const data = await response.json();
-      if (response.status === 200) {
-        data?.map((item) => {
-          setyearHighPrice(item.high_price_52_week);
-          setyearLowPrice(item.low_price_52_week);
-        });
-      }
-    };
-    getStockTechnicalDetails(ticker);
-  }, [searchedstockData, ticker]);
+  //   const getStockTechnicalDetails = async (ticker) => {
+  //     const response = await fetch(
+  //       `http://127.0.0.1:8000/api/stock/${ticker}/`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: "Bearer " + authTokens?.access,
+  //         },
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     if (response.status === 200) {
+  //       data?.map((item) => {
+  //         setyearHighPrice(item.high_price_52_week);
+  //         setyearLowPrice(item.low_price_52_week);
+  //       });
+  //     }
+  //   };
+  //   getStockTechnicalDetails(ticker);
+  // }, [searchedstockData, ticker]);
 
   useEffect(() => {
     if (searchedstockData?.prices) {
@@ -254,12 +262,21 @@ function StockDetails() {
 
   // Set chartData once labels and closePrices are updated
   useEffect(() => {
-    if (labels.length > 0 && closePrices.length > 0) {
+    if (
+      labels.length > 0 &&
+      closePrices.length > 0 &&
+      prediction?.predicted_price
+    ) {
+      const n = labels.length;
+      // choose null or 0 based on your visual preference
+      const predictedPrices = Array(n - 1)
+        .fill(null)
+        .concat(prediction?.predicted_price);
       setChartData({
         labels,
         datasets: [
           {
-            label: "NEPSE Index Price",
+            label: "Close Price",
             data: closePrices,
             fill: true,
             backgroundColor: function (context) {
@@ -293,10 +310,53 @@ function StockDetails() {
             clip: 10,
             tension: 0.2,
           },
+          {
+            label: "Predicted Price",
+            data: predictedPrices,
+            backgroundColor: function (context) {
+              const chart = context.chart;
+              const { ctx, chartArea } = chart;
+              return chartAreaGradient(ctx, chartArea, [
+                {
+                  stop: 0,
+                  color: adjustColorOpacity(
+                    getCssVariable("--color-green-500"),
+                    0
+                  ),
+                },
+                {
+                  stop: 1,
+                  color: adjustColorOpacity(
+                    getCssVariable("--color-green-500"),
+                    0.2
+                  ),
+                },
+              ]);
+            },
+            borderColor: adjustColorOpacity(
+              getCssVariable("--color-green-500"),
+              1
+            ),
+            borderWidth: 2,
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            pointBackgroundColor: adjustColorOpacity(
+              getCssVariable("--color-green-500"),
+              0.5
+            ),
+            pointHoverBackgroundColor: adjustColorOpacity(
+              getCssVariable("--color-green-500"),
+              1
+            ),
+            pointBorderWidth: 3,
+            pointHoverBorderWidth: 0,
+            clip: 20,
+            tension: 0.2,
+          },
         ],
       });
     }
-  }, [labels, closePrices]);
+  }, [labels, closePrices, prediction]);
   useEffect(() => {
     const stockCompetitors = async (sector) => {
       let response = await fetch(
@@ -345,6 +405,56 @@ function StockDetails() {
       }
     };
     fetchStocks(ticker);
+  }, [ticker]);
+
+  // new method
+  const fetchPrediction = async (ticker) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/stock/${
+          ticker
+        }/prediction/`
+      );
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.error || `HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      // console.log(data);
+      setPrediction(data);
+      setError(null);
+      setLoading(false);
+
+      // If task is pending or in progress, keep polling every 5 seconds
+      if (
+        data.source === "celery" &&
+        data.task_id &&
+        (data.status === "Prediction queued" ||
+          data.status === "Prediction in progress…")
+      ) {
+        pollInterval.current = setTimeout(fetchPrediction, 5000);
+      }
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
+  // Start fetching on component mount or when ticker changes
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    setPrediction(null);
+    fetchPrediction(ticker);
+
+    // Clean up polling on component unmount or ticker change
+    return () => {
+      if (pollInterval.current) {
+        clearTimeout(pollInterval.current);
+      }
+    };
   }, [ticker]);
 
   const handleClick = (ticker) => {
@@ -424,76 +534,6 @@ function StockDetails() {
   useEffect(() => {
     const date = new Date();
     settodayDate(date.toDateString());
-    // setChartData({
-    //   labels: [
-    //     "12-01-2022",
-    //     "01-01-2023",
-    //     "02-01-2023",
-    //     "03-01-2023",
-    //     "04-01-2023",
-    //     "05-01-2023",
-    //     "06-01-2023",
-    //     "07-01-2023",
-    //     "08-01-2023",
-    //     "09-01-2023",
-    //     "10-01-2023",
-    //     "11-01-2023",
-    //     "12-01-2023",
-    //     "01-01-2024",
-    //     "02-01-2024",
-    //     "03-01-2024",
-    //     "04-01-2024",
-    //     "05-01-2024",
-    //     "06-01-2024",
-    //     "07-01-2024",
-    //     "08-01-2024",
-    //     "09-01-2024",
-    //     "10-01-2024",
-    //     "11-01-2024",
-    //     "12-01-2024",
-    //     "01-01-2025",
-    //   ],
-    //   datasets: [
-    //     {
-    //       label: "NEPSE Index Price",
-    //       data: [
-    //         540, 466, 540, 466, 385, 432, 334, 334, 289, 289, 200, 289, 222,
-    //         289, 289, 403, 554, 304, 289, 270, 134, 270, 829, 344, 388, 364,
-    //       ],
-    //       fill: true,
-    //       backgroundColor: function (context) {
-    //         const chart = context.chart;
-    //         const { ctx, chartArea } = chart;
-    //         return chartAreaGradient(ctx, chartArea, [
-    //           {
-    //             stop: 0,
-    //             color: adjustColorOpacity(
-    //               getCssVariable("--color-violet-500"),
-    //               0
-    //             ),
-    //           },
-    //           {
-    //             stop: 1,
-    //             color: adjustColorOpacity(
-    //               getCssVariable("--color-violet-500"),
-    //               0.2
-    //             ),
-    //           },
-    //         ]);
-    //       },
-    //       borderColor: getCssVariable("--color-violet-500"),
-    //       borderWidth: 2,
-    //       pointRadius: 0,
-    //       pointHoverRadius: 3,
-    //       pointBackgroundColor: getCssVariable("--color-violet-500"),
-    //       pointHoverBackgroundColor: getCssVariable("--color-violet-500"),
-    //       pointBorderWidth: 0,
-    //       pointHoverBorderWidth: 0,
-    //       clip: 20,
-    //       tension: 0.2,
-    //     },
-    //   ],
-    // });
   }, []);
 
   return (
@@ -565,7 +605,7 @@ function StockDetails() {
               <div className="mb-8 grow flex flex-col grid col-span-full sm:col-span-12 xl:col-span-12 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
                 <div className="grid grid-cols-12 gap-2 ">
                   <div className="stock-price-chart col-span-9 flex flex-col">
-                    <div className="daily-data flex flex-col pr-3 p-8">
+                    <div className="daily-data flex flex-col pr-3 p-8 pb-0">
                       <div className="flex justify-between flex-row">
                         <div className="flex flex-row">
                           <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
@@ -674,7 +714,10 @@ function StockDetails() {
                             height={245}
                           />
                         ) : (
-                          <p>Loading chart...</p>
+                          <div className="flex items-center justify-center ">
+                            {/* <Spinner className="h-12 w-12" color="color-gray-500"/> */}
+                            <Loader/>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -937,11 +980,16 @@ function StockDetails() {
                       )}
                     </div>
                   </div>
+                  <div>
+                    <form action="" onSubmit={() => handlePredictionClick}>
+                      <button type="submit">Predict</button>
+                    </form>
+                  </div>
                 </div>
               </div>
 
-            {/* Test Stock Chart */}
-                      {/* <StockChartWithResolution rawData={searchedstockData?.prices}/> */}
+              {/* Test Stock Chart */}
+              {/* <StockChartWithResolution rawData={searchedstockData?.prices}/> */}
             </div>
           </div>
         </main>
