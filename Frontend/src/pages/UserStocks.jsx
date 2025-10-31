@@ -29,7 +29,7 @@ function UserStocks() {
     if (UserStocks) {
       // console.log(UserWatchlist)
       setUserStock(UserStocks);
-      console.log(UserStocks)
+      // console.log(UserStocks)
     } else {
       setUserWatchList("loading");
     }
