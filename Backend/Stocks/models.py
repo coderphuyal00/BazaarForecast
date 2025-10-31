@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from Account.models import CustomUserModel
 from django.utils import timezone
+from datetime import date
 # Stores Stock Details 
 class Stock(models.Model):
     ticker=models.CharField(max_length=10,unique=True)
@@ -85,3 +86,12 @@ class StockPrediction(models.Model):
 
     def __str__(self):
         return f"{self.stock.ticker} - ${self.predicted_price} on {self.prediction_date}"
+    
+class StockPredictionPending(models.Model):
+    stock = models.ForeignKey(Stock, on_delete=models.CASCADE)
+    prediction_date = models.DateTimeField()
+    task_id = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("stock", "prediction_date")

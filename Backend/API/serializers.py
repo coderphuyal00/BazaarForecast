@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from Stocks.models import UserStocks,StockTechnicalDetails,Stock,UserPortfolioValue,UserWatchList
+from Stocks.models import UserStocks,StockTechnicalDetails,Stock,UserPortfolioValue,UserWatchList,StockPrediction
 from Account.models import CustomUserModel
 from Data_Handling.stock_price import getStockPrice
 from rest_framework import serializers
@@ -104,6 +104,7 @@ class IndexdataSerializer(serializers.Serializer):
     index=serializers.CharField()
     date=serializers.DateField()
     close_price=serializers.FloatField()
+    
 
 # Register User
 User = get_user_model()
@@ -166,3 +167,9 @@ class UserWatchListSerializer(serializers.ModelSerializer):
         price_data = self.context.get('price_data', {}).get(obj.stock.id, [])
         serializer = StockDetailSerializer(obj.stock, context={'price_data': price_data})
         return serializer.data
+
+class StockPredictionSerializer(serializers.ModelSerializer):
+    # stock=serializers.SerializerMethodField()
+    class Meta:
+        model=StockPrediction
+        fields=['predicted_price','stock']

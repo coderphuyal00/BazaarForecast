@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from Stocks.views import predict_stock_view
 from  .views import RegisterView,StockListView,StockDetailView,StockTechnicalDataDetailView, UserStockUpdateView,UserStockRetrieveDestroyAPIView,UserStockCreateView,UserDetailsUpdateView,UserWatchlistStockRetrieveDestroyAPIView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -27,6 +28,7 @@ urlpatterns=[
     path('stocks/',StockListView.as_view(),name='search-stocks'),
     path('stock/detail/<str:stock>/<str:resolution>/',views.get_stock_detail_with_price,name='detail-stocks'),
     path('stock/<str:ticker>/',views.StockTechnicalDataDetailView,name='stocks'),
+    path('stock/<str:ticker>/prediction/',predict_stock_view,name='stock-prediction'),
     path('stock/<str:resolution>/<str:stock>/',views.getStockprice,name='stock-prices'),
     path('stocks/category/<str:stock_sector>/',views.StockCompetitorsView,name='stock-competitors-view'),
     path('index-price/<str:index>/',views.getIndexesprice,name='get-indexes-details'),

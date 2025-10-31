@@ -4,9 +4,9 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
-from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList
+from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList,StockPrediction
 from Account.models import CustomUserModel
-from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer,StockDetailSerializer
+from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer,StockDetailSerializer,StockPredictionSerializer
 from rest_framework.permissions import IsAuthenticated
 #register users
 from rest_framework.views import APIView
@@ -291,3 +291,8 @@ def user_stock_watchlist(request):
     serializer = UserWatchListSerializer(user_stocks, many=True, context={'price_data': price_data})
 
     return Response(serializer.data)
+
+class StockPredictedPriceView(generics.CreateAPIView):
+    queryset=StockPrediction.objects.all()
+    permission_classes=[AllowAny]
+    serializer_class=StockPredictionSerializer
