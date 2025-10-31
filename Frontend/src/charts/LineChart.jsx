@@ -59,12 +59,25 @@ function LineChart({ data, width, height }) {
 
               // Show price as label, preserve decimals as needed
               label: (tooltipItem) => {
-                const price = tooltipItem.parsed.y;
-                // Format price as string without abbreviation, showing full decimals
-                return `${price.toString()}`;
+                // const price = tooltipItem.parsed.y;
+                // // Format price as string without abbreviation, showing full decimals
+                // return `${price.toString()}`;
+                const datasetLabel = tooltipItem.dataset.label || "";
+                const value =
+                  tooltipItem.parsed.y !== undefined
+                    ? tooltipItem.parsed.y
+                    : tooltipItem.parsed;
+
+                if (datasetLabel === "Predicted Price") {
+                  return `Predicted Price for Tomorrow: Rs.${value.toFixed(2)}`;
+                }
+
+                return `${datasetLabel}: Rs.${value.toFixed(2)}`;
               },
             },
-            titleColor: darkMode ? tooltipBodyColor.light : tooltipBodyColor.dark,
+            titleColor: darkMode
+              ? tooltipBodyColor.light
+              : tooltipBodyColor.dark,
             bodyColor: darkMode
               ? tooltipBodyColor.dark
               : tooltipBodyColor.light,
@@ -76,7 +89,7 @@ function LineChart({ data, width, height }) {
               : tooltipBorderColor.light,
           },
           legend: {
-            display: false,
+            display: true,
           },
         },
         interaction: {
