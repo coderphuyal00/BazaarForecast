@@ -39,7 +39,10 @@ function UserStocksTable() {
       setSortOrder("asc");
     }
   };
-
+const handleClick = (ticker) => {
+    navigate(`/stock/${ticker}`);
+    window.location.reload();
+  };
   // Sorting logic based on sortBy and sortOrder
   const sortedData = [...UserStocks].sort((a, b) => {
     const aValue = a[sortBy];
