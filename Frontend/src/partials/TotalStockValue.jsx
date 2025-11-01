@@ -50,71 +50,6 @@ function TotalStockValue({ displayLocation }) {
     fetchStockPricesAndCalculateTotal();
   }, [userStocks]);
   useEffect(() => {
-    async function PortfolioValue() {
-      const cacheKey = "userPortfolioData";
-      const cacheTimestampKey = "nepseChartDataTimestamp";
-
-      const cachedData = localStorage.getItem(cacheKey);
-      const cachedTimestamp = localStorage.getItem(cacheTimestampKey);
-
-      const now = new Date();
-
-      if (cachedData && cachedTimestamp) {
-        const cachedDate = new Date(cachedTimestamp);
-        const diffInDays = (now - cachedDate) / (1000 * 60 * 60 * 24);
-
-        if (diffInDays < 1) {
-          // Data was sent within last 24 hours, no need to send again
-          // console.log("Using cached data, skipping API call.");
-          return JSON.parse(cachedData);
-        }
-      }
-
-      if (!totalValue || totalValue === 0) {
-        // Optional: avoid sending invalid or empty totalValue
-        return;
-      }
-
-      try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/user/portfolio/add/",
-          {
-            method: "POST",
-            headers: {
-              Authorization: "Bearer " + authTokens?.access,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              portfolio_value_date: currentDate,
-              portfolio_value: totalValue,
-            }),
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error("Error:", errorData);
-        } else {
-          console.log("Added portfolio value successfully");
-
-          // Update cache after successful upload
-          localStorage.setItem(
-            cacheKey,
-            JSON.stringify({
-              portfolio_value_date: currentDate,
-              portfolio_value: totalValue,
-            })
-          );
-          localStorage.setItem(cacheTimestampKey, now.toISOString());
-        }
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
-    }
-
-    PortfolioValue();
-  }, [currentDate]);
-  useEffect(() => {
     async function fetchUserStockPortfolioValue() {
       try {
         const response = await fetch(
@@ -176,6 +111,7 @@ function TotalStockValue({ displayLocation }) {
         <div className="flex items-start">
           <div className="text-3xl font-bold text-[#d8dbe2] dark:text-[#a9bcd0] mr-2">
             {totalValue.toLocaleString("en-US")}
+            
           </div>
           {isGain ? (
             <div className="text-sm font-medium text-green-700 mt-2 px-1.5 bg-green-500/20 rounded-full">
