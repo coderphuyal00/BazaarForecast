@@ -14,6 +14,13 @@ export default function UserAccountSettings() {
   const { fullUserDetails, authTokens } = useContext(AuthContext);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [userDetail, setUserDetail] = useState({
+    id: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    username: "",
+  });
 
   useEffect(() => {
     if (fullUserDetails) {
@@ -23,8 +30,70 @@ export default function UserAccountSettings() {
       setUserDetails("loading");
     }
   }, [fullUserDetails]);
+  useEffect(() => {
+    // getUserDetails();
+    if (userDetails != "") {
+      setUserDetail({
+        id: userDetails?.id,
+        first_name: userDetails?.first_name,
+        last_name: userDetails?.last_name,
+        email: userDetails?.email,
+        username: userDetails?.username,
+      });
+    } else {
+      setUserDetail({
+        first_name: "loading",
+        last_name: "loading",
+        email: "loading",
+        username: "loading",
+      });
+    }
+    // console.log(userDetails);
+  }, [userDetails]);
+  const handleSubmit = async(e) => {
+  
+    e.preventDefault();
+    let formD = new FormData();
 
-  const handleSubmit = () => {};
+    formD.set("password", userDetail.password);
+    formD.set("password2", userDetail.password2);
+    
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/user/change-password/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + authTokens?.access,
+          },
+          body: formD,
+        }
+      );
+      const result = await response.json();
+      console.log(result);
+      // try {
+      //   const data = JSON.parse(result);
+      //   console.log("Parsed JSON data:", data);
+      // } catch (err) {
+      //   console.error("JSON parse error:", err);
+      // }
+      if (!response.ok) {
+        throw new Error(result.message || "Something went wrong");
+      }
+      // console.log("Form submitted successfully:", result);
+      if(result){
+        alert("Password Changed Successfully")
+        // window.location.reload();
+      }
+      // console.log(formD);
+    } catch (error) {
+      console.error("Submission error:", error.message);
+    }
+    const formObject = Object.fromEntries(formD.entries());
+    // console.log(formObject);
+  
+  };
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -113,7 +182,7 @@ export default function UserAccountSettings() {
                               id="edit-user-information"
                               modalOpen={searchModalOpen}
                               setModalOpen={setSearchModalOpen}
-                              //   formData={userDetail}
+                                formData={userDetail}
                             />
                           </div>
                         </div>
@@ -129,10 +198,11 @@ export default function UserAccountSettings() {
                                 First Name
                               </label>
                               <div class="relative mt-2">
-                                <input disabled 
+                                <input
+                                  disabled
                                   type="text"
                                   className="w-full pl-3 pr-3 py-2 font-semibold dark:text-white bg-transparent placeholder:text-slate-600 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                  value ={userDetails?.first_name}
+                                  value={userDetails?.first_name}
                                 />
                               </div>
                             </div>
@@ -145,7 +215,8 @@ export default function UserAccountSettings() {
                                 Last Name
                               </label>
                               <div class="relative mt-2">
-                                <input disabled 
+                                <input
+                                  disabled
                                   type="text"
                                   className="w-full pl-3 pr-3 py-2 font-semibold dark:text-white bg-transparent placeholder:text-slate-600 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                   value={userDetails?.last_name}
@@ -162,7 +233,8 @@ export default function UserAccountSettings() {
                                 Email
                               </label>
                               <div class="relative mt-2">
-                                <input disabled 
+                                <input
+                                  disabled
                                   type="text"
                                   className="w-full pl-3 pr-3 py-2 font-semibold dark:text-white bg-transparent text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease shadow-sm "
                                   placeholder={userDetails?.email}
@@ -182,6 +254,7 @@ export default function UserAccountSettings() {
                       Password
                     </h1>
                     <div className="rounded-xl border-1 border-gray-400/30 p-5 flex flex-col justify-between mt-3">
+                    <form action="" onSubmit={handleSubmit}>
                       <div class="w-full max-w-sm min-w-[200px] mb-5">
                         <label
                           htmlFor=""
@@ -191,21 +264,23 @@ export default function UserAccountSettings() {
                         </label>
                         <div class=" mt-2 items-center flex flex-col">
                           <div className="input relative flex w-full flex-col">
-                            <input
-                            type={showNewPassword ? "text" : "password"}
-                            className="w-full pl-3 pr-3 py-2 dark:text-white bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                            placeholder="Enter new password"
-                          />
-                          <span
-                            onClick={() => setShowNewPassword(!showNewPassword)}
-                            className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                          >
-                            {showNewPassword ? (
-                              <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                            ) : (
-                              <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                            )}
-                          </span>
+                            <input name="password"
+                              type={showNewPassword ? "text" : "password"}
+                              className="w-full pl-3 pr-3 py-2 dark:text-white bg-transparent placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                              placeholder="Enter new password"
+                            />
+                            <span
+                              onClick={() =>
+                                setShowNewPassword(!showNewPassword)
+                              }
+                              className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+                            >
+                              {showNewPassword ? (
+                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                              ) : (
+                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                              )}
+                            </span>
                           </div>
                           <p class="flex items-start mt-2 text-xs text-slate-400">
                             <svg
@@ -233,7 +308,7 @@ export default function UserAccountSettings() {
                           Confirm New Password{" "}
                         </label>
                         <div class="relative mt-2 flex w-full flex-col">
-                          <input
+                          <input name="password2"
                             type={showConfirmPassword ? "text" : "password"}
                             className="w-full pl-3 pr-3 py-2 bg-transparent dark:text-white placeholder:text-slate-400 text-slate-600 text-sm border border-slate-200 rounded-md transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                             placeholder="Re-type new password"
@@ -256,11 +331,12 @@ export default function UserAccountSettings() {
                       <div className="mt-3">
                         <button
                           className="flex items-center rounded-md border border-slate-300 py-1 px-4 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none dark:hover:bg-gray-500 dark:text-white"
-                          type="button"
+                          type="submit"
                         >
                           Change Password
                         </button>
                       </div>
+                      </form>
                     </div>
                   </div>
                   <div className="p-2">

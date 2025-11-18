@@ -65,6 +65,11 @@ export const StockDataProvider = ({ children }) => {
   };
   
   useEffect(() => {
+    if (!user) {
+    setuserStocks([]);
+    setuserWatchlist([]);
+    return;
+  }
     const UserStocks = async () => {
       const response = await fetch("http://127.0.0.1:8000/api/user/stocks/", {
         method: "GET",

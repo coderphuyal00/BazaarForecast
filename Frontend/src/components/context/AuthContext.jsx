@@ -136,6 +136,7 @@ export const AuthProvider = ({ children }) => {
             username: data.username,
           });
           setUserDetails(data)
+          // console.log(data)
         }
       } catch (error) {
         console.error(error);

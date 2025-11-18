@@ -58,7 +58,7 @@ function Dashboard() {
             {/* Cards */}
 
             <div className="grid grid-cols-12 gap-6">
-              <PortfolioChart/>
+              {/* <PortfolioChart/> */}
               <InfiniteScroll/>
               {/* <DashboardCard01 />
               <DashboardCard02 />

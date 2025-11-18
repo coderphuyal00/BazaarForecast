@@ -55,7 +55,7 @@ export default function InfiniteScroll() {
   }, []);
   if (sectorsData) {
     const allData = Object.values(sectorsData).flat();
-    console.log(allData);
+    // console.log(allData);
     // Prepare the marquee content, showing index, date, and close price
     const marqueeText = allData
       .map((item) => `${item.index} on ${item.date}: ${item.close_price}`)

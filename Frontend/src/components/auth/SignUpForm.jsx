@@ -30,7 +30,7 @@ function SignUpForm() {
       if (response.status === 201) {
         console.log("User Signup API Post Works");
         await loginUser(email,password);
-        console.log(data);
+        // console.log(data);
       } else {
         console.error("Error:", data);
       }

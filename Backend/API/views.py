@@ -289,7 +289,7 @@ class UserWatchlistStockRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):
 
 @api_view(['GET'])
 def user_stock_list(request):
-    user_stocks = UserStocks.objects.select_related('stock', 'user').all()
+    user_stocks = UserStocks.objects.select_related('stock', 'user').filter(user=request.user)
 
     # Example dynamic price data dictionary keyed by stock id
     price_data = {}
