@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from Stocks.models import Stock,UserStocks,StockTechnicalDetails,UserPortfolioValue,UserWatchList,StockPrediction
 from Account.models import CustomUserModel
-from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer,StockDetailSerializer,StockPredictionSerializer
+from .serializers import UserSerializer,IndexdataSerializer,UserstockSerializer,UserStockSerializer,StockSerializer,stockpriceSerializer,TechnicalDataSerializer,StorePortfolioValue,UserPortfolioSerializer,StoreUserWatchList,UserWatchListSerializer,UpdateUserStockSerializer,StockDetailSerializer,StockPredictionSerializer,UserChangePasswordSerializer
 from rest_framework.permissions import IsAuthenticated
 #register users
 from rest_framework.views import APIView
@@ -217,13 +217,34 @@ def StockTechnicalDataDetailView(request,ticker):
     serializer=TechnicalDataSerializer(stock_technical_data,many=True)
     return Response(serializer.data)
 
+# @api_view(['GET'])
+# def StockCompetitorsView(request,stock_sector):
+#     stock_ids = list(Stock.objects.filter(sector=stock_sector).values_list('id', flat=True)[:5])
+#     stock_technical_data=StockTechnicalDetails.objects.filter(stock_id__in=stock_ids)
+#     serializer=TechnicalDataSerializer(stock_technical_data,many=True)
+#     # serializer=StockSerializer(stock,many=True)    
+#     return Response(serializer.data)
+
 @api_view(['GET'])
-def StockCompetitorsView(request,stock_sector):
-    stock_ids = list(Stock.objects.filter(sector=stock_sector).values_list('id', flat=True)[:5])
-    stock_technical_data=StockTechnicalDetails.objects.filter(stock_id__in=stock_ids)
-    serializer=TechnicalDataSerializer(stock_technical_data,many=True)
-    # serializer=StockSerializer(stock,many=True)    
-    return Response(serializer.data)
+def StockCompetitorsView(request, stock_sector):
+    # Get stock objects in requested sector (limit as needed)
+    stocks = Stock.objects.filter(sector=stock_sector)[:5]
+    response_data = []
+
+    for stock in stocks:
+        # Fetch dynamic price data
+        price_data = getStockPrice(stock.ticker, resolution='1D')
+        price_serializer = stockpriceSerializer(data=price_data, many=True)
+        if not price_serializer.is_valid():
+            return Response(price_serializer.errors, status=400)
+
+        # Serialize stock with price data in context
+        stock_serializer = StockDetailSerializer(stock, context={'price_data': price_serializer.validated_data})
+
+        # Append serialized stock details (with price) to response list
+        response_data.append(stock_serializer.data)
+
+    return Response(response_data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -296,3 +317,10 @@ class StockPredictedPriceView(generics.CreateAPIView):
     queryset=StockPrediction.objects.all()
     permission_classes=[AllowAny]
     serializer_class=StockPredictionSerializer
+
+class UserChangePasswordView(APIView):
+  permission_classes = [IsAuthenticated]
+  def post(self, request, format=None):
+    serializer = UserChangePasswordSerializer(data=request.data, context={'user':request.user})
+    serializer.is_valid(raise_exception=True)
+    return Response({'msg':'Password Changed Successfully'}, status=status.HTTP_200_OK)

@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from Stocks.views import predict_stock_view
-from  .views import RegisterView,StockListView,StockDetailView,StockTechnicalDataDetailView, UserStockUpdateView,UserStockRetrieveDestroyAPIView,UserStockCreateView,UserDetailsUpdateView,UserWatchlistStockRetrieveDestroyAPIView
+from  .views import RegisterView,StockListView,StockDetailView,StockTechnicalDataDetailView, UserStockUpdateView,UserStockRetrieveDestroyAPIView,UserStockCreateView,UserDetailsUpdateView,UserWatchlistStockRetrieveDestroyAPIView,UserChangePasswordView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -32,4 +32,5 @@ urlpatterns=[
     path('stock/<str:resolution>/<str:stock>/',views.getStockprice,name='stock-prices'),
     path('stocks/category/<str:stock_sector>/',views.StockCompetitorsView,name='stock-competitors-view'),
     path('index-price/<str:index>/',views.getIndexesprice,name='get-indexes-details'),
+    path('user/change-password/', UserChangePasswordView.as_view(), name='change-password'),
 ]
