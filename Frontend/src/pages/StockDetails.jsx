@@ -3,7 +3,7 @@ import IndexCard from "../partials/dashboard/IndexCard";
 import Header from "../partials/Header";
 import Sidebar from "../partials/Sidebar";
 import SearchBox from "../components/ui/search";
-import Loader from "../components/ui/spinner"
+import Loader from "../components/ui/spinner";
 import RealTimeChart from "../charts/RealtimeChart";
 import LineChart from "../charts/LineChart";
 import { Spinner } from "@material-tailwind/react";
@@ -18,6 +18,7 @@ import { formatThousands, formatIndianNumber } from "../utils/Utils";
 import StockPriceSignal from "../partials/StockPriceSignal ";
 import StockCompetitorsTable from "../partials/StockCompetitorsTable";
 import StockChartWithResolution from "../partials/ResolutionWiseStockData";
+import InfiniteScroll from "../partials/InfiniteScroll";
 
 function StockDetails() {
   const navigate = useNavigate();
@@ -257,6 +258,54 @@ function StockDetails() {
     if (searchedstockData?.prices) {
       setLabels(searchedstockData.prices.map((item) => item.date));
       setClosePrices(searchedstockData.prices.map((item) => item.close_price));
+      //set today ltp,high,low prices and volumes
+      setTodayClosePrice(searchedstockData.prices.at(-1).close_price);
+      setTodayHighPrice(searchedstockData.prices.at(-1).high_price);
+      setTodayLowPrice(searchedstockData.prices.at(-1).low_price);
+      setTodayVolume(searchedstockData.prices.at(-1).volume);
+
+      let secondLastElement = searchedstockData.prices.at(-2).close_price;
+      let lastElement = searchedstockData.prices.at(-1).close_price;
+      const diffPercentage = () => {
+        // console.log(secondLastElement);
+        let percentageDiff =
+          ((lastElement - secondLastElement) / secondLastElement) * 100;
+        if (lastElement > secondLastElement) {
+          setGain(true);
+        } else {
+          setGain(false);
+        }
+        if (lastElement > secondLastElement) {
+          setGain(true);
+        } else if (lastElement == secondLastElement) {
+          setEqual(true);
+        } else {
+          setGain(false);
+        }
+        function truncateDecimals(num, digits) {
+          const multiplier = Math.pow(10, digits);
+          return ~~(num * multiplier) / multiplier;
+        }
+        return truncateDecimals(percentageDiff, 2);
+      };
+      setPriceDiff(diffPercentage());
+      const diffPoint = () => {
+        // let secondLastElement = close_prices[lastIndex - 2];
+        // console.log(secondLastElement);
+        let pointDiff = lastElement - secondLastElement;
+        if (lastElement > secondLastElement) {
+          setGain(true);
+        } else {
+          setGain(false);
+        }
+        function truncateDecimals(num, digits) {
+          const multiplier = Math.pow(10, digits);
+          return ~~(num * multiplier) / multiplier;
+        }
+        return truncateDecimals(pointDiff, 2);
+      };
+      setPricePointDiff(diffPoint());
+      // setTodayClosePrice(searchedstockData.prices.at(-1).close_price)
     }
   }, [searchedstockData]);
 
@@ -357,26 +406,24 @@ function StockDetails() {
       });
     }
   }, [labels, closePrices, prediction]);
-  useEffect(() => {
-    const stockCompetitors = async (sector) => {
-      let response = await fetch(
-        `http://127.0.0.1:8000/api/stocks/category/${sector}/`
-      );
-      let apiData = await response.json();
-      setStockCompetitors(apiData);
-      // console.log(apiData);
-    };
-    stockCompetitors(stockSector);
-  }, [stockSector]);
+
   useEffect(() => {
     // searchedstockData?.map((searchedstockData) => (
     //   setStockSector(searchedstockData.stock.sector)
     // ))
-    if (searchedstockData?.length > 0) {
-      setStockSector(searchedstockData[0].stock.sector);
+    if (searchedstockData?.sector) {
+      // setStockSector(searchedstockData?.sector);
+      const stockCompetitors = async (sector) => {
+        let response = await fetch(
+          `http://127.0.0.1:8000/api/stocks/category/${sector}/`
+        );
+        let apiData = await response.json();
+        setStockCompetitors(apiData);
+        // console.log(apiData);
+      };
+      stockCompetitors(searchedstockData?.sector);
     }
   }, [searchedstockData]);
-
   useEffect(() => {
     if (!ticker) return;
 
@@ -397,7 +444,7 @@ function StockDetails() {
         throw new Error("Network response was not ok");
       }
       const apiData = await response.json();
-      // console.log(apiData)
+      // console.log(apiData);
       if (apiData) {
         setsearchedstockData(apiData);
 
@@ -405,15 +452,33 @@ function StockDetails() {
       }
     };
     fetchStocks(ticker);
+    const getStockTechnicalDetails = async (ticker) => {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/stock/${ticker}/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + authTokens?.access,
+          },
+        }
+      );
+      const data = await response.json();
+      // console.log(data)
+      if (response.status === 200) {
+        data?.map((item) => {
+          setyearHighPrice(item.high_price_52_week);
+          setyearLowPrice(item.low_price_52_week);
+        });
+      }
+    };
+    getStockTechnicalDetails(ticker);
   }, [ticker]);
 
   // new method
   const fetchPrediction = async (ticker) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/stock/${
-          ticker
-        }/prediction/`
+        `http://127.0.0.1:8000/api/stock/${ticker}/prediction/`
       );
 
       if (!response.ok) {
@@ -434,7 +499,7 @@ function StockDetails() {
         (data.status === "Prediction queued" ||
           data.status === "Prediction in progress…")
       ) {
-        pollInterval.current = setTimeout(fetchPrediction, 5000);
+        pollInterval.current = setTimeout(() => fetchPrediction(ticker), 5000);
       }
     } catch (err) {
       setError(err.message);
@@ -553,35 +618,8 @@ function StockDetails() {
 
             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
               {/* Dashboard actions */}
-              <div className="index-data flex mb-3 ">
-                {/* Index Data */}
-                <div className="max-w-(--breakpoint-2xl) md:p-0">
-                  <div className="grid grid-cols-12 gap-4 md:gap-6">
-                    <div className="col-span-10">
-                      <div className="col-span-full gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
-                        <IndexCard />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="max-w-(--breakpoint-2xl) md:p-0">
-                  <div className="grid grid-cols-12 gap-4 md:gap-6">
-                    <div className="col-span-10">
-                      <div className="col-span-full gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
-                        <IndexCard />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="max-w-(--breakpoint-2xl) md:p-0">
-                  <div className="grid grid-cols-12 gap-4 md:gap-6">
-                    <div className="col-span-10">
-                      <div className="col-span-full gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
-                        <IndexCard />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="grid grid-cols-12 gap-6 m-2">
+                <InfiniteScroll />
               </div>
               <div className="border-b border-gray-200 dark:border-gray-700/60 z-999"></div>
               <div className="sm:flex sm:justify-between sm:items-center mb-8">
@@ -651,7 +689,7 @@ function StockDetails() {
                           <div className="text-sm font-normal text-gray-800 dark:text-gray-100 mr-2">
                             Trade Day Range
                           </div>
-                          <div className="text-lg font-bold text-gray-700 mt-2 px-1.5">
+                          <div className="text-lg font-bold text-gray-700 mt-2 dark:text-gray-100 px-1.5">
                             {todayLowPrice != null
                               ? Number.parseFloat(
                                   Number(todayLowPrice).toFixed(4)
@@ -669,7 +707,7 @@ function StockDetails() {
                           <div className="text-sm font-normal text-gray-800 dark:text-gray-100 mr-2">
                             Volume
                           </div>
-                          <div className="text-lg font-bold text-gray-700 mt-2">
+                          <div className="text-lg font-bold text-gray-700 dark:text-gray-100 mt-2">
                             {todayVolume}
                           </div>
                         </div>
@@ -716,7 +754,7 @@ function StockDetails() {
                         ) : (
                           <div className="flex items-center justify-center ">
                             {/* <Spinner className="h-12 w-12" color="color-gray-500"/> */}
-                            <Loader/>
+                            <Loader />
                           </div>
                         )}
                       </div>
@@ -734,16 +772,14 @@ function StockDetails() {
                         <h3 className="font-semibold text-gray-800 dark:text-gray-100 dark:font-bold">
                           Price Momentum
                         </h3>
-                        <span className="font-normal dark:text-gray-100 dark:font-bold">
+                        <span className="font-normal dark:text-gray-100 ">
                           {searchedstockData?.ticker} is trading{" "}
-                          <strong>
-                            <StockPriceSignal
-                              todayPrice={todayClosePrice}
-                              low52Week={yearLowPrice}
-                              high52Week={yearHighPrice}
-                              thresholdPercent={2}
-                            />
-                          </strong>{" "}
+                          <StockPriceSignal
+                            todayPrice={todayClosePrice}
+                            low52Week={yearLowPrice}
+                            high52Week={yearHighPrice}
+                            thresholdPercent={2}
+                          />{" "}
                           of its 52-week range .
                         </span>
                       </div>
@@ -938,18 +974,20 @@ function StockDetails() {
                     {searchedstockData?.ticker} Competitors
                   </div>
                   {/* Table */}
-                  {/* {searchedstockData != null ? (
+                  {searchedstockData != null && stockCompetitors != null ? (
                     <StockCompetitorsTable
-                      currentTicker={searchedstockData?.ticker}
+                      currentTicker={searchedstockData}
                       currentTickerPriceDiff={priceDiff}
                       currentTickerClosePrice={todayClosePrice}
+                      currentTickerYearHighPrice={yearHighPrice}
+                      currentTickerYearLowPrice={yearLowPrice}
                       stockCompetitors={stockCompetitors}
                       handleClick={handleClick}
                       className="text-gray-800"
                     />
                   ) : (
                     "Loading.."
-                  )} */}
+                  )}
                 </div>
 
                 {/* Insights */}

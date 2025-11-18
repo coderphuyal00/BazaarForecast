@@ -76,7 +76,7 @@ export const StockDataProvider = ({ children }) => {
         throw new Error("Network response was not ok");
       }
       const apiData = await response.json();
-      console.log(apiData)
+      // console.log(apiData)
       setuserStocks(apiData);
       return apiData;
     };
@@ -101,7 +101,7 @@ export const StockDataProvider = ({ children }) => {
 
       if (response.status === 200) {
         setuserWatchlist(apiData);
-        console.log(apiData)
+        // console.log(apiData)
       }
     } catch (error) {
       console.error("Failed to fetch user watchlist:", error);

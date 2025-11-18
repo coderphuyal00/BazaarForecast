@@ -30,11 +30,11 @@ function StockPriceSignal({ todayPrice, low52Week, high52Week, thresholdPercent 
 const getColor = () => {
     if (signal === 'near top') return 'text-green-700';
     if (signal === 'near bottom') return 'red';
-    if (signal === 'middle range') return 'black';
-    return 'black'; // default
+    if (signal === 'middle range') return 'text-gray-800 dark:text-gray-500';
+    return 'text-gray-800 dark:text-gray-500'; // default
   };
   return (
-      <strong style={{ color: getColor(), fontWeight: 'bold' }}>{signal}</strong>
+      <strong  style={{ color: getColor(), fontWeight: 'bold' }}>{signal}</strong>
   );
 }
 

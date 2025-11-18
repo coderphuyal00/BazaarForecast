@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
-import {StockClosePrice,StockPriceDiff} from "./StockClosePrices";
+import { useEffect, useState,useContext } from "react";
+import { StockClosePrice, StockPriceDiff } from "./StockClosePrices";
+import AuthContext from "../components/context/AuthContext";
 function StockCompetitorsTable({
   currentTicker,
   stockCompetitors,
   currentTickerClosePrice,
+  currentTickerYearHighPrice,
+  currentTickerYearLowPrice,
   currentTickerPriceDiff,
   handleClick,
 }) {
@@ -13,7 +16,9 @@ function StockCompetitorsTable({
   const [stockData, setStockData] = useState([]);
   const [ticker, setTicker] = useState();
   const [stockSector, setStockSector] = useState();
+  const [competitorsData, setCompetitorsData] = useState([]);
   const [fetchFunction, setfetchFunction] = useState();
+  const {authTokens}=useContext(AuthContext)
   const fetchClosePrice = (ticker) => {
     fetch(`http://127.0.0.1:8000/api/stock/daily-price/${ticker}/`)
       .then((response) => response.json())
@@ -46,61 +51,45 @@ function StockCompetitorsTable({
         setPriceDiff(diffPercentage());
       });
   };
-  //   useEffect(() => {
-  //     // Extract tickers from your array of objects
-  //     const tickers = stockCompetitors.map((item) => item.stock.ticker);
-  //     console.log(tickers)
-  //     const fetchStockPrices = async (ticker) => {
-  //     //   const close_prices = [];
-  //       try {
-  //         const response = await fetch(
-  //           `http://127.0.0.1:8000/api/stock/1D/${ticker}/`
-  //         );
-  //         const data = await response.json();
-  //         const close_prices=data.map((item) => item.close_price);
-  //         let lastIndex = close_prices.length;
-  //         let lastElement = close_prices[lastIndex - 1];
-  //         // const addItem = (newItem) => {
-  //         //   setStockData((prevstockData) => [...prevstockData, newItem]);
-  //         // };
-  //         // addItem(data); // 'data' property holds the stocks info
-  //         console.log(data)
-  //       } catch (error) {
-  //         console.error("Error fetching stock data:", error);
-  //       }
-  //     };
-  //     tickers.map((ticker) => {
-  //       fetchStockPrices(ticker);
-  //     });
-  //     // console.log(stockData);
-  //   }, [stockCompetitors]);
+  useEffect(() => {
+    // Extract tickers from your array of objects
+    const tickers = stockCompetitors?.map((item) => item.ticker);
+    // console.log(tickers);
+    const fetchStocks = async (ticker) => {
+      // const navigate = useNavigate();
+      // const {ticker}=useParams()
+      // const inputTicker = e.target.search.value;
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/stock/detail/${ticker}/1D/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + authTokens?.access,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const apiData = await response.json();
+      // console.log(apiData);
+      if (apiData) {
+        addStockData(apiData);
 
-  
+        return apiData;
+      }
+    };
+    tickers?.map((ticker) => {
+      fetchStocks(ticker);
+      // fetchStockPrices(ticker);
+    });
+    // console.log(stockData);
+  }, [stockCompetitors]);
 
-  //   useEffect(() => {
-  //     const stockCompetitors = async (sector) => {
-  //       let response = await fetch(
-  //         `http://127.0.0.1:8000/api/stocks/category/${sector}/`
-  //       );
-  //       let apiData = await response.json();
-  //     //   setStockCompetitors(apiData);
-  //     let tickers=apiData.map((item)=>item.stock.ticker)
-  //     tickers.forEach(ticker=>{
-  //         fetchStockPrices(ticker)
-  //     })
-  //       console.log(apiData);
-  //     };
-  //     stockCompetitors(stockSector);
-  //   }, [stockSector]);
-  //   useEffect(() => {
-  //     // searchedstockData?.map((item) => (
-  //     //   setStockSector(item.stock.sector)
-  //     // ))
-  //     if (stockCompetitors?.length > 0) {
-  //       setStockSector(currentTicker.stock.sector);
-  //     }
-  //   }, [stockCompetitors]);
-  //   setfetchFunction(fetchClosePrice(ticker));
+  const addStockData = (newItem) => {
+    setCompetitorsData((prevList) => [...prevList, newItem]);
+  };
+
   return (
     <table className="table-auto w-full ">
       {/* Table header */}
@@ -116,14 +105,14 @@ function StockCompetitorsTable({
             <div className="font-semibold text-center">Market Cap.</div>
           </th>
           <th className="p-2">
-            <div className="font-semibold text-center">Price</div>
+            <div className="font-semibold text-center">LTP</div>
           </th>
           <th className="p-2">
             <div className="font-semibold text-center">Day Change</div>
           </th>
           <th className="p-2">
             <div className="font-semibold text-center">
-              52 Weeks Price Range
+              Last Day Price Range
             </div>
           </th>
         </tr>
@@ -135,43 +124,48 @@ function StockCompetitorsTable({
           <td className="p-2">
             <div className="flex items-center">
               <div className="text-gray-800 dark:text-gray-300 border-b border-gray-500 cursor-pointer">
-                {currentTicker.stock.ticker}
+                {currentTicker.ticker}
               </div>
             </div>
           </td>
           <td className="p-2">
-            <div className="text-center">{currentTicker.stock.name}</div>
+            <div className="text-center">{currentTicker.name}</div>
           </td>
           <td className="p-2">
             <div className="text-center ">
-              {currentTicker.stock.market_cap != null
-                ? Number.parseFloat(
-                    Number(currentTicker.stock.market_cap).toFixed(4)
-                  )
+              {currentTicker.market_cap != null
+                ? Number.parseFloat(Number(currentTicker.market_cap).toFixed(4))
                 : "-"}
             </div>
           </td>
           <td className="p-2">
-            <div className="text-center"> Rs.
+            <div className="text-center">
+              {" "}
+              Rs.
               {currentTickerClosePrice != null
                 ? Number.parseFloat(Number(currentTickerClosePrice).toFixed(4))
                 : "-"}
             </div>
           </td>
           <td className="p-2">
-            <div className="text-center"><StockPriceDiff TickerPrices={currentTicker.stock.ticker} displayLocation='competitors-table'/></div>
+            <div className="text-center">
+              <StockPriceDiff
+                TickerPrices={currentTicker.prices}
+                displayLocation="competitors-table"
+              />
+            </div>
           </td>
           <td className="p-2">
             <div className="text-center">
-              {currentTicker.low_price_52_week != null
+              {currentTicker.prices.at(-1).low_price != null
                 ? Number.parseFloat(
-                    Number(currentTicker.low_price_52_week).toFixed(4)
+                    Number(currentTicker.prices.at(-1).low_price).toFixed(4)
                   )
                 : "-"}{" "}
               -{" "}
-              {currentTicker.high_price_52_week != null
+              {currentTicker.prices.at(-1).low_price != null
                 ? Number.parseFloat(
-                    Number(currentTicker.high_price_52_week).toFixed(4)
+                    Number(currentTicker.prices.at(-1).high_price).toFixed(4)
                   )
                 : "-"}
             </div>
@@ -179,50 +173,54 @@ function StockCompetitorsTable({
         </tr>
         {/* api fetched data */}
         {/* {stockCompetitors.map(item => <li key={item.id}>{item.id}</li>)} */}
-        {stockCompetitors
-          .filter((item1) => item1.id !== currentTicker.id)
-          .map((item1) => (
+        {competitorsData
+          ?.filter((item1) => item1.id !== currentTicker.id)
+          ?.map((item1) => (
             <tr key={item1.id}>
               <td className="p-2 pr-0">
                 <div className="flex items-center">
                   <div className="text-gray-800 dark:text-gray-300 border-b border-gray-500 cursor-pointer">
-                    <span onClick={() => handleClick(item1.stock.ticker)}>
-                      {item1.stock.ticker}
+                    <span onClick={() => handleClick(item1.ticker)}>
+                      {item1.ticker}
                     </span>
                   </div>
                 </div>
               </td>
               <td className="p-2 pl-1">
-                <div className="text-center">{item1.stock.name}</div>
+                <div className="text-center">{item1.name}</div>
               </td>
               <td className="p-2">
                 <div className="text-center ">
-                  {item1.stock.market_cap != null
-                    ? Number.parseFloat(
-                        Number(item1.stock.market_cap).toFixed(4)
-                      )
+                  {item1.market_cap != null
+                    ? Number.parseFloat(Number(item1.market_cap).toFixed(4))
                     : "-"}
                 </div>
               </td>
               <td className="p-2">
                 <div className="text-center">
-                  <StockClosePrice TickerPrice={item1.stock.ticker}/>
+                  <StockClosePrice TickerPrice={item1.prices} />
                 </div>
               </td>
               <td className="p-1">
-                <div className="text-center dark:text-gray-300"><StockPriceDiff className="text-gray-800" TickerPrices={item1.stock.ticker} displayLocation='competitors-table'/></div>
+                <div className="text-center dark:text-gray-300">
+                  <StockPriceDiff
+                    className="text-gray-800"
+                    TickerPrices={item1.prices}
+                    displayLocation="competitors-table"
+                  />
+                </div>
               </td>
               <td className="p-2">
                 <div className="text-center ">
-                  {item1.low_price_52_week != null
+                  {item1.prices.at(-1).low_price != null
                     ? Number.parseFloat(
-                        Number(item1.low_price_52_week).toFixed(4)
+                        Number(item1.prices.at(-1).low_price).toFixed(4)
                       )
                     : "-"}{" "}
                   -{" "}
-                  {item1.high_price_52_week != null
+                  {item1.prices.at(-1).high_price != null
                     ? Number.parseFloat(
-                        Number(item1.high_price_52_week).toFixed(4)
+                        Number(item1.prices.at(-1).high_price).toFixed(4)
                       )
                     : "-"}
                 </div>

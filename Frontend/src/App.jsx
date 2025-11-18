@@ -20,6 +20,7 @@ import { AuthProvider } from "./components/context/AuthContext";
 import { StockDataProvider } from "./components/context/StockDataContext";
 import PrivateRoute from "./utils/PrivateRoute";
 import UserDetails from "./pages/UserDetails";
+import UserAccountSettings from "./pages/UserAccountSetting";
 import SignUpForm from "./components/auth/SignUpForm";
 import UserProfile1 from "./components/UserProfile";
 import UserInfoCard from "./components/UserProfile/UserInfoDetails";
@@ -49,6 +50,7 @@ function App() {
                 <Route path="profile/" element={<UserDetails />} />
                 <Route path="stock/:ticker" element={<StockDetails />} />
                 <Route path="my-stocks/" element={<UserStocks />} />
+                <Route path="account/setting/" element={<UserAccountSettings />} />
               </Route>
               <Route path="signin/" element={<SignIn />} />
               <Route path="signup/" element={<SignUp />} />

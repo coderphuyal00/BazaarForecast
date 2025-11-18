@@ -7,7 +7,7 @@ export function StockClosePrice({ TickerPrice, displayLocation }) {
   useEffect(() => {
     try {
       const prices = TickerPrice;
-      const todayClosePrice = prices[prices.length - 1].close_price.toFixed(2);
+      const todayClosePrice = prices.at(-1).close_price.toFixed(2);
       setclosePrice(todayClosePrice);
     } catch (error) {
       return error;

@@ -246,7 +246,7 @@ const backgroundStyle = {
                   return (
                     <React.Fragment>
                       <a
-                        href="#0"
+                        href="/"
                         className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
                           pathname.includes("settings")
                             ? ""
@@ -298,7 +298,7 @@ const backgroundStyle = {
                           <li className="mb-1 last:mb-0">
                             <NavLink
                               end
-                              to="https://cruip.com/mosaic/"
+                              to="account/setting/"
                               className={({ isActive }) =>
                                 "block transition duration-150 truncate " +
                                 (isActive

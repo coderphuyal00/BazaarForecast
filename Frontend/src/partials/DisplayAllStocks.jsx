@@ -12,7 +12,7 @@ function StockPriceTable() {
         ); // Replace with real API
         const data = await response.json();
         setStocks(data.data);
-        console.log(data.data);
+        // console.log(data.data);
         const lastDate = new Date(data.data[0].lastUpdatedDateTime);
         setupdatedTime(lastDate.toLocaleString());
       } catch (error) {

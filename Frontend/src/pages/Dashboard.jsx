@@ -25,6 +25,7 @@ import InfiniteScroll from "../partials/InfiniteScroll";
 import UserStocksTable from "../partials/UserStocksTable";
 import StorePortfolioValue from "../partials/RequestPortfolioValue";
 import StockPriceTable from "../partials/DisplayAllStocks";
+import PortfolioChart from '../partials/PortfolioChart'
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   // const [weekStart,weekEnd]=useContext();
@@ -57,17 +58,18 @@ function Dashboard() {
             {/* Cards */}
 
             <div className="grid grid-cols-12 gap-6">
+              <PortfolioChart/>
               <InfiniteScroll/>
-              <DashboardCard01 />
+              {/* <DashboardCard01 />
               <DashboardCard02 />
-              <DashboardCard03 />
+              <DashboardCard03 /> */}
               {/* <InfiniteScroll /> */}
               {/* Nepse Line chart */}
+              {/* Line chart (Real Time Value) */}
+              <DashboardCard11 />
               <CalenderLayout />
               {/* Bar chart  */}
               {/* <DashboardCard04 /> */}
-              {/* Line chart (Real Time Value) */}
-              <DashboardCard11 />
               {/* User Stocks Table */}
               <UserStocksTable/>
 

@@ -8,6 +8,7 @@ import { Button } from "@material-tailwind/react";
 import StockDataContext from "../components/context/StockDataContext";
 import TotalStockValue from "../partials/TotalStockValue";
 import ModalAddUserStock from "../components/ModalAddUserStock";
+import InfiniteScroll from "../partials/InfiniteScroll";
 import bgImg from "../images/928.jpg";
 import {
   StockClosePrice,
@@ -65,7 +66,7 @@ function UserStocks() {
     setModalMode("add");
     setSearchModalOpen(true);
   };
-  const calculateDiff = ({item}) => {
+  const calculateDiff = ({ item }) => {
     const prices = item.stock.prices;
     const todayClosePrice = prices[prices.length - 1].close_price;
     const yesterdayClosePrice = prices[prices.length - 2].close_price;
@@ -87,7 +88,9 @@ function UserStocks() {
         : "#e63939";
 
     // return (`<span style="color: ${color}; font-weight: bold">${priceDiffSign}%</span> `);
-    return (<span style="color: ${color}; font-weight: bold">${priceDiffSign}%</span>)
+    return (
+      <span style="color: ${color}; font-weight: bold">${priceDiffSign}%</span>
+    );
   };
   return (
     <div className="flex h-screen overflow-hidden">
@@ -98,7 +101,9 @@ function UserStocks() {
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/*  Site header */}
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-
+        <div className="grid grid-cols-12 gap-6 m-2">
+          <InfiniteScroll />
+        </div>
         <main className="grow">
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
             {/* Dashboard actions */}
@@ -220,7 +225,6 @@ function UserStocks() {
                           <td className="p-2">
                             <div className="text-center">
                               <p>Rs.{item.stock.prices.at(-1).close_price}</p>
-                              
                             </div>
                           </td>
                           <td className="p-2 text-center">
@@ -231,7 +235,10 @@ function UserStocks() {
                                 }}
                               /> */}
                               {/* <calculateDiff item={item}/> */}
-                              <StockPriceDiff TickerPrices={item.stock.prices} displayLocation="user-stock-table"/>
+                              <StockPriceDiff
+                                TickerPrices={item.stock.prices}
+                                displayLocation="user-stock-table"
+                              />
                             </div>
                           </td>
                           <td className="p-2">
@@ -302,16 +309,6 @@ function UserStocks() {
                       </tr>
                     </tbody>
                   </table>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
-              <div className="grid grid-cols-12 gap-4 md:gap-6">
-                <div className="col-span-12">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
-                    <IndexCard />
-                  </div>
                 </div>
               </div>
             </div>

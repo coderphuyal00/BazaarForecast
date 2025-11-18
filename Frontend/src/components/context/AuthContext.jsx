@@ -20,6 +20,7 @@ export const AuthProvider = ({ children }) => {
     email: "",
     username: "",
   });
+  const [userDetails,setUserDetails]=useState()
   // const history=useHistory()
 
   let loginUser = async (email,password) => {
@@ -134,6 +135,7 @@ export const AuthProvider = ({ children }) => {
             email: data.email,
             username: data.username,
           });
+          setUserDetails(data)
         }
       } catch (error) {
         console.error(error);
@@ -195,6 +197,7 @@ export const AuthProvider = ({ children }) => {
     logoutUser: logoutUser,
     fetchDataOncePerDay: fetchDataOncePerDay,
     userDetails: userDetailData,
+    fullUserDetails:userDetails
   };
 
   return (
